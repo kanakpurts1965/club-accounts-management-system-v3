@@ -1,6 +1,4 @@
-<!-- dashboard.html -->
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -17,7 +15,7 @@ Dashboard
 </title>
 
 <link rel="icon"
-href="123.png.png">
+href="assets/images/logo.png">
 
 <link rel="stylesheet"
 href="assets/css/main.css">
@@ -34,16 +32,14 @@ href="assets/css/dashboard.css">
 
 <div class="dashboard">
 
-<!-- ======================
-SIDEBAR
-====================== -->
+<!-- Sidebar -->
 
 <aside class="sidebar">
 
 <div class="logo">
 
 <img
-src="logo.png.png">
+src="assets/images/logo.png">
 
 <h2>
 
@@ -61,10 +57,6 @@ Management System
 
 <nav>
 
-<ul>
-
-<li>
-
 <a
 class="active"
 href="dashboard.html">
@@ -73,19 +65,11 @@ href="dashboard.html">
 
 </a>
 
-</li>
-
-<li>
-
 <a href="credit.html">
 
 💰 Credit
 
 </a>
-
-</li>
-
-<li>
 
 <a href="debit.html">
 
@@ -93,19 +77,11 @@ href="dashboard.html">
 
 </a>
 
-</li>
-
-<li>
-
 <a href="member-contribution.html">
 
 👥 Member Contribution
 
 </a>
-
-</li>
-
-<li>
 
 <a href="cash-in-hand.html">
 
@@ -113,19 +89,11 @@ href="dashboard.html">
 
 </a>
 
-</li>
-
-<li>
-
 <a href="statement.html">
 
 📄 Statement
 
 </a>
-
-</li>
-
-<li>
 
 <a href="member-master.html">
 
@@ -133,19 +101,11 @@ href="dashboard.html">
 
 </a>
 
-</li>
-
-<li>
-
 <a href="admin-management.html">
 
 👑 Admin Management
 
 </a>
-
-</li>
-
-<li>
 
 <a href="settings.html">
 
@@ -153,23 +113,17 @@ href="dashboard.html">
 
 </a>
 
-</li>
-
-</ul>
-
 </nav>
 
 </aside>
 
-<!-- ======================
-CONTENT
-====================== -->
+<!-- Content -->
 
 <div class="content">
 
 <header class="top-header">
 
-<div class="top-header-left">
+<div>
 
 <h1>
 
@@ -185,8 +139,6 @@ Club Accounts Management System
 
 </div>
 
-<div class="top-header-right">
-
 <div class="profile">
 
 <img
@@ -194,11 +146,13 @@ src="assets/images/default-user.png">
 
 <div>
 
-<h4>
+<strong>
 
 Master Admin
 
-</h4>
+</strong>
+
+<br>
 
 <small>
 
@@ -210,19 +164,11 @@ Online
 
 </div>
 
-</div>
-
 </header>
-
-<!-- DASHBOARD CONTENT START -->
-
-  <!-- ======================
-SUMMARY CARDS
-====================== -->
 
 <div class="grid-4">
 
-<div class="info-card">
+<div class="card">
 
 <h4>
 
@@ -236,15 +182,9 @@ Total Credit
 
 </h2>
 
-<p>
-
-All Credit Amount
-
-</p>
-
 </div>
 
-<div class="info-card">
+<div class="card">
 
 <h4>
 
@@ -258,15 +198,9 @@ Total Debit
 
 </h2>
 
-<p>
-
-All Debit Amount
-
-</p>
-
 </div>
 
-<div class="info-card">
+<div class="card">
 
 <h4>
 
@@ -280,15 +214,9 @@ Cash In Hand
 
 </h2>
 
-<p>
-
-Current Balance
-
-</p>
-
 </div>
 
-<div class="info-card">
+<div class="card">
 
 <h4>
 
@@ -302,25 +230,9 @@ Members
 
 </h2>
 
-<p>
-
-Registered Members
-
-</p>
-
 </div>
 
 </div>
-
-<!-- ======================
-CHART + SUMMARY
-====================== -->
-
-<div
-style="display:grid;
-grid-template-columns:2fr 1fr;
-gap:20px;
-margin-bottom:25px;">
 
 <div class="content-card">
 
@@ -330,108 +242,17 @@ Accounts Overview
 
 </h2>
 
-<canvas
-id="accountsChart"
-height="120">
-
-</canvas>
+<canvas id="accountsChart"></canvas>
 
 </div>
 
 <div class="content-card">
-
-<h2>
-
-Quick Summary
-
-</h2>
-
-<div
-style="display:flex;
-justify-content:space-between;
-padding:12px 0;">
-
-<span>Total Credit</span>
-
-<strong id="summaryCredit">
-
-₹0
-
-</strong>
-
-</div>
-
-<div
-style="display:flex;
-justify-content:space-between;
-padding:12px 0;">
-
-<span>Total Debit</span>
-
-<strong id="summaryDebit">
-
-₹0
-
-</strong>
-
-</div>
-
-<div
-style="display:flex;
-justify-content:space-between;
-padding:12px 0;">
-
-<span>Cash In Hand</span>
-
-<strong id="summaryCash">
-
-₹0
-
-</strong>
-
-</div>
-
-<div
-style="display:flex;
-justify-content:space-between;
-padding:12px 0;">
-
-<span>Members</span>
-
-<strong id="summaryMembers">
-
-0
-
-</strong>
-
-</div>
-
-</div>
-
-</div>
-
-
-  <!-- ======================
-RECENT TRANSACTIONS
-====================== -->
-
-<div class="content-card">
-
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
 
 <h2>
 
 Recent Transactions
 
 </h2>
-
-<button class="primary-btn">
-
-View All
-
-</button>
-
-</div>
 
 <table>
 
@@ -447,8 +268,6 @@ View All
 
 <th>Amount</th>
 
-<th>Status</th>
-
 </tr>
 
 </thead>
@@ -457,9 +276,9 @@ View All
 
 <tr>
 
-<td colspan="5" style="text-align:center;">
+<td colspan="4">
 
-No Transactions Found
+No Data
 
 </td>
 
@@ -470,84 +289,6 @@ No Transactions Found
 </table>
 
 </div>
-
-
-
-<!-- ======================
-QUICK ACTION
-====================== -->
-
-<div class="content-card">
-
-<h2>
-
-Quick Actions
-
-</h2>
-
-<div class="grid-4">
-
-<button
-class="primary-btn"
-onclick="location.href='credit.html'">
-
-➕ Add Credit
-
-</button>
-
-<button
-class="danger-btn"
-onclick="location.href='debit.html'">
-
-➖ Add Debit
-
-</button>
-
-<button
-class="success-btn"
-onclick="location.href='member-contribution.html'">
-
-👥 Contribution
-
-</button>
-
-<button
-class="warning-btn"
-onclick="location.href='statement.html'">
-
-📄 Statement
-
-</button>
-
-</div>
-
-</div>
-
-
-
-<!-- ======================
-FOOTER
-====================== -->
-
-<footer
-style="text-align:center;
-margin-top:30px;
-padding:20px;
-color:#64748b;">
-
-© 2026 Club Accounts Management System
-
-<br>
-
-Designed & Developed by
-
-<strong>
-
-Tanmoy Adak
-
-</strong>
-
-</footer>
 
 </div>
 
