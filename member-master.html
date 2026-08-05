@@ -1,1 +1,268 @@
-<!-- member-master.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Member Master</title>
+
+<link rel="icon" href="assets/images/logo.png">
+
+<link rel="stylesheet" href="assets/css/main.css">
+
+<link rel="stylesheet" href="assets/css/layout.css">
+
+<link rel="stylesheet" href="assets/css/member-master.css">
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+<aside class="sidebar">
+
+<div class="logo">
+
+<img src="assets/images/logo.png">
+
+<h2>Club Accounts</h2>
+
+<p>Management System</p>
+
+</div>
+
+<nav>
+
+<a href="dashboard.html">🏠 Dashboard</a>
+
+<a href="credit.html">💰 Credit</a>
+
+<a href="debit.html">💸 Debit</a>
+
+<a href="member-contribution.html">👥 Member Contribution</a>
+
+<a href="cash-in-hand.html">💵 Cash In Hand</a>
+
+<a href="statement.html">📄 Statement</a>
+
+<a class="active" href="member-master.html">👤 Member Master</a>
+
+<a href="admin-management.html">👑 Admin Management</a>
+
+<a href="settings.html">⚙ Settings</a>
+
+</nav>
+
+</aside>
+
+<div class="content">
+
+<header class="top-header">
+
+<div>
+
+<h1>Member Master</h1>
+
+<p>Manage Club Members</p>
+
+</div>
+
+<button class="primary-btn"
+
+onclick="openMemberModal()">
+
++ Add Member
+
+</button>
+
+</header>
+
+<div class="content-card">
+
+<input
+
+type="text"
+
+id="memberSearch"
+
+placeholder="Search Member..."
+
+onkeyup="searchMember()">
+
+</div>
+
+<div class="content-card">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Photo</th>
+
+<th>Name</th>
+
+<th>Mobile</th>
+
+<th>Blood</th>
+
+<th>Join Date</th>
+
+<th>Status</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="memberTable">
+
+</tbody>
+
+</table>
+
+</div>
+<!-- ADD MEMBER MODAL -->
+
+<div id="memberModal" class="modal">
+
+<div class="modal-content">
+
+<h2>
+
+Add New Member
+
+</h2>
+
+<form id="memberForm">
+
+<div class="form-group">
+
+<label>
+
+Full Name
+
+</label>
+
+<input
+type="text"
+id="memberName"
+required>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Mobile Number
+
+</label>
+
+<input
+type="tel"
+id="memberMobile"
+maxlength="10"
+required>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Blood Group
+
+</label>
+
+<select id="memberBlood">
+
+<option value="">
+
+Select Blood Group
+
+</option>
+
+<option>A+</option>
+<option>A-</option>
+<option>B+</option>
+<option>B-</option>
+<option>AB+</option>
+<option>AB-</option>
+<option>O+</option>
+<option>O-</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Photo
+
+</label>
+
+<input
+type="file"
+id="memberPhoto"
+accept="image/*">
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Joining Date
+
+</label>
+
+<input
+type="date"
+id="memberJoinDate"
+readonly>
+
+</div>
+
+<div style="display:flex;gap:10px;justify-content:flex-end;">
+
+<button
+type="button"
+class="danger-btn"
+onclick="closeMemberModal()">
+
+Cancel
+
+</button>
+
+<button
+type="submit"
+class="primary-btn">
+
+Save Member
+
+</button>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+<script type="module" src="assets/js/firebase.js"></script>
+
+<script type="module" src="assets/js/member-master.js"></script>
+
+</body>
+
+</html>
