@@ -1,268 +1,81 @@
-<!DOCTYPE html>
-<html lang="en">
+// ==========================================
+// MEMBER MASTER V3
+// Club Accounts Management System
+// Designed & Developed by Tanmoy Adak
+// ==========================================
 
-<head>
+import { db } from "./firebase.js";
 
-<meta charset="UTF-8">
+import {
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+collection,
 
-<title>Member Master</title>
+addDoc,
 
-<link rel="icon" href="assets/images/logo.png">
+getDocs,
 
-<link rel="stylesheet" href="assets/css/main.css">
+updateDoc,
 
-<link rel="stylesheet" href="assets/css/layout.css">
+deleteDoc,
 
-<link rel="stylesheet" href="assets/css/member-master.css">
+doc,
 
-</head>
+query,
 
-<body>
+orderBy
 
-<div class="dashboard">
+}
 
-<aside class="sidebar">
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
-<div class="logo">
+const memberCollection=collection(db,"members");
 
-<img src="assets/images/logo.png">
+const memberTable=document.getElementById("memberTable");
 
-<h2>Club Accounts</h2>
+const memberForm=document.getElementById("memberForm");
 
-<p>Management System</p>
+let editId=null;
 
-</div>
+// ==========================================
+// AUTO JOIN DATE
+// ==========================================
 
-<nav>
+window.onload=()=>{
 
-<a href="dashboard.html">🏠 Dashboard</a>
+const today=new Date();
 
-<a href="credit.html">💰 Credit</a>
+document.getElementById("memberJoinDate").value=
 
-<a href="debit.html">💸 Debit</a>
+today.toISOString().split("T")[0];
 
-<a href="member-contribution.html">👥 Member Contribution</a>
+loadMembers();
 
-<a href="cash-in-hand.html">💵 Cash In Hand</a>
+};
 
-<a href="statement.html">📄 Statement</a>
+// ==========================================
+// OPEN MODAL
+// ==========================================
 
-<a class="active" href="member-master.html">👤 Member Master</a>
+window.openMemberModal=()=>{
 
-<a href="admin-management.html">👑 Admin Management</a>
+editId=null;
 
-<a href="settings.html">⚙ Settings</a>
+memberForm.reset();
 
-</nav>
+document.getElementById("memberJoinDate").value=
 
-</aside>
+new Date().toISOString().split("T")[0];
 
-<div class="content">
+document.getElementById("memberModal").style.display="flex";
 
-<header class="top-header">
+};
 
-<div>
+// ==========================================
+// CLOSE MODAL
+// ==========================================
 
-<h1>Member Master</h1>
+window.closeMemberModal=()=>{
 
-<p>Manage Club Members</p>
+document.getElementById("memberModal").style.display="none";
 
-</div>
-
-<button class="primary-btn"
-
-onclick="openMemberModal()">
-
-+ Add Member
-
-</button>
-
-</header>
-
-<div class="content-card">
-
-<input
-
-type="text"
-
-id="memberSearch"
-
-placeholder="Search Member..."
-
-onkeyup="searchMember()">
-
-</div>
-
-<div class="content-card">
-
-<table>
-
-<thead>
-
-<tr>
-
-<th>Photo</th>
-
-<th>Name</th>
-
-<th>Mobile</th>
-
-<th>Blood</th>
-
-<th>Join Date</th>
-
-<th>Status</th>
-
-<th>Action</th>
-
-</tr>
-
-</thead>
-
-<tbody id="memberTable">
-
-</tbody>
-
-</table>
-
-</div>
-<!-- ADD MEMBER MODAL -->
-
-<div id="memberModal" class="modal">
-
-<div class="modal-content">
-
-<h2>
-
-Add New Member
-
-</h2>
-
-<form id="memberForm">
-
-<div class="form-group">
-
-<label>
-
-Full Name
-
-</label>
-
-<input
-type="text"
-id="memberName"
-required>
-
-</div>
-
-<div class="form-group">
-
-<label>
-
-Mobile Number
-
-</label>
-
-<input
-type="tel"
-id="memberMobile"
-maxlength="10"
-required>
-
-</div>
-
-<div class="form-group">
-
-<label>
-
-Blood Group
-
-</label>
-
-<select id="memberBlood">
-
-<option value="">
-
-Select Blood Group
-
-</option>
-
-<option>A+</option>
-<option>A-</option>
-<option>B+</option>
-<option>B-</option>
-<option>AB+</option>
-<option>AB-</option>
-<option>O+</option>
-<option>O-</option>
-
-</select>
-
-</div>
-
-<div class="form-group">
-
-<label>
-
-Photo
-
-</label>
-
-<input
-type="file"
-id="memberPhoto"
-accept="image/*">
-
-</div>
-
-<div class="form-group">
-
-<label>
-
-Joining Date
-
-</label>
-
-<input
-type="date"
-id="memberJoinDate"
-readonly>
-
-</div>
-
-<div style="display:flex;gap:10px;justify-content:flex-end;">
-
-<button
-type="button"
-class="danger-btn"
-onclick="closeMemberModal()">
-
-Cancel
-
-</button>
-
-<button
-type="submit"
-class="primary-btn">
-
-Save Member
-
-</button>
-
-</div>
-
-</form>
-
-</div>
-
-</div>
-
-<script type="module" src="assets/js/firebase.js"></script>
-
-<script type="module" src="assets/js/member-master.js"></script>
-
-</body>
-
-</html>
+};
