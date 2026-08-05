@@ -1,0 +1,22 @@
+{
+  "name": "Club Accounts Management System",
+  "short_name": "Club Accounts",
+  "description": "Professional Club Accounts Management System",
+  "start_url": "login.html",
+  "display": "standalone",
+  "background_color": "#f5f7fb",
+  "theme_color": "#2563eb",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
