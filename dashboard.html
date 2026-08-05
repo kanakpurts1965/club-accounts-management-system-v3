@@ -1,1 +1,564 @@
 <!-- dashboard.html -->
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>
+
+Dashboard
+
+</title>
+
+<link rel="icon"
+href="123.png.png">
+
+<link rel="stylesheet"
+href="assets/css/main.css">
+
+<link rel="stylesheet"
+href="assets/css/layout.css">
+
+<link rel="stylesheet"
+href="assets/css/dashboard.css">
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+<!-- ======================
+SIDEBAR
+====================== -->
+
+<aside class="sidebar">
+
+<div class="logo">
+
+<img
+src="logo.png.png">
+
+<h2>
+
+Club Accounts
+
+</h2>
+
+<p>
+
+Management System
+
+</p>
+
+</div>
+
+<nav>
+
+<ul>
+
+<li>
+
+<a
+class="active"
+href="dashboard.html">
+
+🏠 Dashboard
+
+</a>
+
+</li>
+
+<li>
+
+<a href="credit.html">
+
+💰 Credit
+
+</a>
+
+</li>
+
+<li>
+
+<a href="debit.html">
+
+💸 Debit
+
+</a>
+
+</li>
+
+<li>
+
+<a href="member-contribution.html">
+
+👥 Member Contribution
+
+</a>
+
+</li>
+
+<li>
+
+<a href="cash-in-hand.html">
+
+💵 Cash In Hand
+
+</a>
+
+</li>
+
+<li>
+
+<a href="statement.html">
+
+📄 Statement
+
+</a>
+
+</li>
+
+<li>
+
+<a href="member-master.html">
+
+👤 Member Master
+
+</a>
+
+</li>
+
+<li>
+
+<a href="admin-management.html">
+
+👑 Admin Management
+
+</a>
+
+</li>
+
+<li>
+
+<a href="settings.html">
+
+⚙ Settings
+
+</a>
+
+</li>
+
+</ul>
+
+</nav>
+
+</aside>
+
+<!-- ======================
+CONTENT
+====================== -->
+
+<div class="content">
+
+<header class="top-header">
+
+<div class="top-header-left">
+
+<h1>
+
+Dashboard
+
+</h1>
+
+<p>
+
+Club Accounts Management System
+
+</p>
+
+</div>
+
+<div class="top-header-right">
+
+<div class="profile">
+
+<img
+src="assets/images/default-user.png">
+
+<div>
+
+<h4>
+
+Master Admin
+
+</h4>
+
+<small>
+
+Online
+
+</small>
+
+</div>
+
+</div>
+
+</div>
+
+</header>
+
+<!-- DASHBOARD CONTENT START -->
+
+  <!-- ======================
+SUMMARY CARDS
+====================== -->
+
+<div class="grid-4">
+
+<div class="info-card">
+
+<h4>
+
+Total Credit
+
+</h4>
+
+<h2 id="totalCredit">
+
+₹0
+
+</h2>
+
+<p>
+
+All Credit Amount
+
+</p>
+
+</div>
+
+<div class="info-card">
+
+<h4>
+
+Total Debit
+
+</h4>
+
+<h2 id="totalDebit">
+
+₹0
+
+</h2>
+
+<p>
+
+All Debit Amount
+
+</p>
+
+</div>
+
+<div class="info-card">
+
+<h4>
+
+Cash In Hand
+
+</h4>
+
+<h2 id="cashInHand">
+
+₹0
+
+</h2>
+
+<p>
+
+Current Balance
+
+</p>
+
+</div>
+
+<div class="info-card">
+
+<h4>
+
+Members
+
+</h4>
+
+<h2 id="totalMembers">
+
+0
+
+</h2>
+
+<p>
+
+Registered Members
+
+</p>
+
+</div>
+
+</div>
+
+<!-- ======================
+CHART + SUMMARY
+====================== -->
+
+<div
+style="display:grid;
+grid-template-columns:2fr 1fr;
+gap:20px;
+margin-bottom:25px;">
+
+<div class="content-card">
+
+<h2>
+
+Accounts Overview
+
+</h2>
+
+<canvas
+id="accountsChart"
+height="120">
+
+</canvas>
+
+</div>
+
+<div class="content-card">
+
+<h2>
+
+Quick Summary
+
+</h2>
+
+<div
+style="display:flex;
+justify-content:space-between;
+padding:12px 0;">
+
+<span>Total Credit</span>
+
+<strong id="summaryCredit">
+
+₹0
+
+</strong>
+
+</div>
+
+<div
+style="display:flex;
+justify-content:space-between;
+padding:12px 0;">
+
+<span>Total Debit</span>
+
+<strong id="summaryDebit">
+
+₹0
+
+</strong>
+
+</div>
+
+<div
+style="display:flex;
+justify-content:space-between;
+padding:12px 0;">
+
+<span>Cash In Hand</span>
+
+<strong id="summaryCash">
+
+₹0
+
+</strong>
+
+</div>
+
+<div
+style="display:flex;
+justify-content:space-between;
+padding:12px 0;">
+
+<span>Members</span>
+
+<strong id="summaryMembers">
+
+0
+
+</strong>
+
+</div>
+
+</div>
+
+</div>
+
+
+  <!-- ======================
+RECENT TRANSACTIONS
+====================== -->
+
+<div class="content-card">
+
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+
+<h2>
+
+Recent Transactions
+
+</h2>
+
+<button class="primary-btn">
+
+View All
+
+</button>
+
+</div>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Date</th>
+
+<th>Type</th>
+
+<th>Program</th>
+
+<th>Amount</th>
+
+<th>Status</th>
+
+</tr>
+
+</thead>
+
+<tbody id="recentTransactions">
+
+<tr>
+
+<td colspan="5" style="text-align:center;">
+
+No Transactions Found
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+
+
+<!-- ======================
+QUICK ACTION
+====================== -->
+
+<div class="content-card">
+
+<h2>
+
+Quick Actions
+
+</h2>
+
+<div class="grid-4">
+
+<button
+class="primary-btn"
+onclick="location.href='credit.html'">
+
+➕ Add Credit
+
+</button>
+
+<button
+class="danger-btn"
+onclick="location.href='debit.html'">
+
+➖ Add Debit
+
+</button>
+
+<button
+class="success-btn"
+onclick="location.href='member-contribution.html'">
+
+👥 Contribution
+
+</button>
+
+<button
+class="warning-btn"
+onclick="location.href='statement.html'">
+
+📄 Statement
+
+</button>
+
+</div>
+
+</div>
+
+
+
+<!-- ======================
+FOOTER
+====================== -->
+
+<footer
+style="text-align:center;
+margin-top:30px;
+padding:20px;
+color:#64748b;">
+
+© 2026 Club Accounts Management System
+
+<br>
+
+Designed & Developed by
+
+<strong>
+
+Tanmoy Adak
+
+</strong>
+
+</footer>
+
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script type="module" src="assets/js/firebase.js"></script>
+
+<script type="module" src="assets/js/dashboard.js"></script>
+
+</body>
+
+</html>
