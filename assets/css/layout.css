@@ -1,334 +1,111 @@
-/* layout.css */
-/* ==========================================
-LAYOUT CSS
-Club Accounts Management System V3
-========================================== */
-
 .dashboard{
-
 display:flex;
-
 min-height:100vh;
-
-background:#f5f7fb;
-
 }
 
-
-
-/* ======================
-SIDEBAR
-====================== */
-
 .sidebar{
-
 width:280px;
-
 background:#0f172a;
-
 color:#fff;
-
-display:flex;
-
-flex-direction:column;
-
 position:fixed;
-
 left:0;
-
 top:0;
-
 bottom:0;
-
-overflow-y:auto;
-
-box-shadow:0 8px 25px rgba(0,0,0,.12);
-
+overflow:auto;
 }
 
 .logo{
-
-padding:30px 20px;
-
+padding:25px;
 text-align:center;
-
 border-bottom:1px solid rgba(255,255,255,.08);
-
 }
 
 .logo img{
-
-width:80px;
-
-height:80px;
-
+width:85px;
+height:85px;
 margin:auto;
-
-margin-bottom:15px;
-
+margin-bottom:12px;
 }
 
 .logo h2{
-
 font-size:22px;
-
 font-weight:700;
-
 }
 
 .logo p{
-
 font-size:13px;
-
-opacity:.75;
-
-margin-top:6px;
-
+opacity:.7;
 }
-
-
-
-/* ======================
-MENU
-====================== */
 
 .sidebar nav{
-
-padding:20px;
-
+padding:18px;
 }
 
-.sidebar nav ul{
-
+.sidebar nav a{
 display:flex;
-
-flex-direction:column;
-
-gap:6px;
-
-}
-
-.sidebar nav ul li a{
-
-display:flex;
-
 align-items:center;
-
 gap:12px;
-
 padding:14px 16px;
-
+margin-bottom:8px;
 border-radius:12px;
-
 color:#cbd5e1;
-
 font-weight:500;
-
-transition:.25s;
-
+transition:.3s;
 }
 
-.sidebar nav ul li a:hover{
-
+.sidebar nav a:hover{
 background:#2563eb;
-
 color:#fff;
-
 }
 
-.sidebar nav ul li a.active{
-
+.sidebar nav a.active{
 background:#2563eb;
-
 color:#fff;
-
 }
-
-
-
-/* ======================
-MAIN
-====================== */
 
 .content{
-
 margin-left:280px;
-
-flex:1;
-
+width:calc(100% - 280px);
 padding:30px;
-
 }
-
-
-
-/* ======================
-TOP HEADER
-====================== */
 
 .top-header{
-
 background:#fff;
-
-padding:18px 25px;
-
-border-radius:15px;
-
+padding:20px 25px;
+border-radius:16px;
 display:flex;
-
 justify-content:space-between;
-
 align-items:center;
-
-margin-bottom:30px;
-
-box-shadow:0 8px 25px rgba(0,0,0,.06);
-
-}
-
-.top-header-left h1{
-
-font-size:28px;
-
-font-weight:700;
-
-color:#0f172a;
-
-}
-
-.top-header-left p{
-
-font-size:14px;
-
-color:#64748b;
-
-margin-top:4px;
-
-}
-
-.top-header-right{
-
-display:flex;
-
-align-items:center;
-
-gap:15px;
-
+box-shadow:0 10px 30px rgba(0,0,0,.08);
+margin-bottom:25px;
 }
 
 .profile{
-
 display:flex;
-
 align-items:center;
-
 gap:12px;
-
 }
 
 .profile img{
-
 width:45px;
-
 height:45px;
-
 border-radius:50%;
-
 }
-
-.profile h4{
-
-font-size:15px;
-
-}
-
-.profile small{
-
-color:#64748b;
-
-}
-
-
-
-/* ======================
-CARDS
-====================== */
 
 .grid-4{
-
 display:grid;
-
 grid-template-columns:repeat(4,1fr);
-
 gap:20px;
-
 margin-bottom:25px;
-
 }
-
-.info-card{
-
-background:#fff;
-
-border-radius:16px;
-
-padding:24px;
-
-box-shadow:0 8px 25px rgba(0,0,0,.06);
-
-transition:.3s;
-
-}
-
-.info-card:hover{
-
-transform:translateY(-5px);
-
-}
-
-.info-card h4{
-
-font-size:15px;
-
-color:#64748b;
-
-margin-bottom:10px;
-
-}
-
-.info-card h2{
-
-font-size:32px;
-
-color:#0f172a;
-
-}
-
-
-
-/* ======================
-CONTENT CARD
-====================== */
 
 .content-card{
-
 background:#fff;
-
+padding:24px;
 border-radius:16px;
-
-padding:25px;
-
-box-shadow:0 8px 25px rgba(0,0,0,.06);
-
+box-shadow:0 10px 30px rgba(0,0,0,.08);
 margin-bottom:25px;
-
 }
-
-
-
-/* ======================
-RESPONSIVE
-====================== */
 
 @media(max-width:1200px){
 
@@ -351,6 +128,8 @@ left:-280px;
 .content{
 
 margin-left:0;
+
+width:100%;
 
 padding:20px;
 
