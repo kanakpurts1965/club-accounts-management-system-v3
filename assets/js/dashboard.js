@@ -1,10 +1,3 @@
-// dashboard.js
-// ==========================================
-// Dashboard V3
-// Club Accounts Management System
-// Designed & Developed by Tanmoy Adak
-// ==========================================
-
 import { db } from "./firebase.js";
 
 import {
@@ -33,37 +26,19 @@ let totalMembers=0;
 
 let totalContribution=0;
 
-let chart=null;
+let chart;
 
 
 
-window.addEventListener(
+window.onload=async()=>{
 
-"load",
+await loadDashboard();
 
-initializeDashboard
-
-);
+};
 
 
 
-async function initializeDashboard(){
-
-await loadSummary();
-
-await loadRecentTransactions();
-
-drawChart();
-
-}
-
-
-
-// =========================
-// LOAD SUMMARY
-// =========================
-
-async function loadSummary(){
+async function loadDashboard(){
 
 await loadCredit();
 
@@ -75,19 +50,17 @@ await loadContribution();
 
 updateCards();
 
+await loadRecent();
+
+drawChart();
+
 }
 
 
 
-// =========================
-// CREDIT
-// =========================
-
 async function loadCredit(){
 
-totalCredit=0;
-
-const snapshot=
+const snap=
 
 await getDocs(
 
@@ -95,15 +68,13 @@ collection(db,"credit")
 
 );
 
-snapshot.forEach(doc=>{
+totalCredit=0;
 
-const data=doc.data();
+snap.forEach(doc=>{
 
-totalCredit+=
+totalCredit+=Number(
 
-Number(
-
-data.amount||0
+doc.data().amount||0
 
 );
 
@@ -113,15 +84,9 @@ data.amount||0
 
 
 
-// =========================
-// DEBIT
-// =========================
-
 async function loadDebit(){
 
-totalDebit=0;
-
-const snapshot=
+const snap=
 
 await getDocs(
 
@@ -129,15 +94,13 @@ collection(db,"debit")
 
 );
 
-snapshot.forEach(doc=>{
+totalDebit=0;
 
-const data=doc.data();
+snap.forEach(doc=>{
 
-totalDebit+=
+totalDebit+=Number(
 
-Number(
-
-data.amount||0
+doc.data().amount||0
 
 );
 
@@ -145,15 +108,11 @@ data.amount||0
 
 }
 
-  // =========================
-// MEMBERS
-// =========================
+
 
 async function loadMembers(){
 
-totalMembers=0;
-
-const snapshot=
+const snap=
 
 await getDocs(
 
@@ -161,21 +120,15 @@ collection(db,"members")
 
 );
 
-totalMembers=snapshot.size;
+totalMembers=snap.size;
 
 }
 
 
 
-// =========================
-// CONTRIBUTION
-// =========================
-
 async function loadContribution(){
 
-totalContribution=0;
-
-const snapshot=
+const snap=
 
 await getDocs(
 
@@ -183,15 +136,13 @@ collection(db,"member_contributions")
 
 );
 
-snapshot.forEach(doc=>{
+totalContribution=0;
 
-const data=doc.data();
+snap.forEach(doc=>{
 
-totalContribution+=
+totalContribution+=Number(
 
-Number(
-
-data.amount||0
+doc.data().amount||0
 
 );
 
@@ -201,17 +152,13 @@ data.amount||0
 
 
 
-// =========================
-// UPDATE DASHBOARD
-// =========================
-
 function updateCards(){
 
 const cash=
 
-totalCredit-
+totalCredit-totalDebit;
 
-totalDebit;
+totalCredit.innerText;
 
 document.getElementById(
 
@@ -251,77 +198,43 @@ document.getElementById(
 
 totalMembers;
 
-document.getElementById(
-
-"summaryCredit"
-
-).innerText=
-
-"₹"+
-
-totalCredit.toLocaleString();
-
-document.getElementById(
-
-"summaryDebit"
-
-).innerText=
-
-"₹"+
-
-totalDebit.toLocaleString();
-
-document.getElementById(
-
-"summaryCash"
-
-).innerText=
-
-"₹"+
-
-cash.toLocaleString();
-
-document.getElementById(
-
-"summaryMembers"
-
-).innerText=
-
-totalMembers;
-
 }
 
-// =========================
-// RECENT TRANSACTIONS
-// =========================
 
-async function loadRecentTransactions(){
 
-const tbody=document.getElementById("recentTransactions");
+async function loadRecent(){
 
-if(!tbody) return;
+const body=
 
-tbody.innerHTML="";
+document.getElementById(
 
-let transactions=[];
+"recentTransactions"
 
-const collections=[
+);
 
-{ name:"credit", type:"Credit" },
+body.innerHTML="";
 
-{ name:"debit", type:"Debit" },
+let list=[];
 
-{ name:"member_contributions", type:"Contribution" }
+const cols=[
+
+["credit","Credit"],
+
+["debit","Debit"],
+
+["member_contributions","Contribution"]
 
 ];
 
-for(const item of collections){
+for(const c of cols){
 
-const snapshot=await getDocs(
+const snap=
+
+await getDocs(
 
 query(
 
-collection(db,item.name),
+collection(db,c[0]),
 
 orderBy("date","desc"),
 
@@ -331,13 +244,11 @@ limit(5)
 
 );
 
-snapshot.forEach(doc=>{
+snap.forEach(doc=>{
 
-transactions.push({
+list.push({
 
-id:doc.id,
-
-type:item.type,
+type:c[1],
 
 ...doc.data()
 
@@ -347,55 +258,33 @@ type:item.type,
 
 }
 
-transactions.sort(
+list.sort(
 
 (a,b)=>
 
-new Date(b.date)-new Date(a.date)
+new Date(b.date)-
+
+new Date(a.date)
 
 );
 
-if(transactions.length===0){
+list.slice(0,10)
 
-tbody.innerHTML=`
+.forEach(item=>{
 
-<tr>
-
-<td colspan="5">
-
-No Transactions Found
-
-</td>
-
-</tr>
-
-`;
-
-return;
-
-}
-
-transactions.slice(0,10).forEach(item=>{
-
-tbody.innerHTML+=`
+body.innerHTML+=`
 
 <tr>
 
-<td>${item.date||"-"}</td>
+<td>${item.date}</td>
 
 <td>${item.type}</td>
 
-<td>${item.program||item.category||"-"}</td>
-
-<td>₹${Number(item.amount||0).toLocaleString()}</td>
+<td>${item.program||"-"}</td>
 
 <td>
 
-<span class="badge badge-success">
-
-Completed
-
-</span>
+₹${Number(item.amount).toLocaleString()}
 
 </td>
 
@@ -409,15 +298,17 @@ Completed
 
 
 
-// =========================
-// CHART
-// =========================
-
 function drawChart(){
 
-const canvas=document.getElementById("accountsChart");
+const ctx=
 
-if(!canvas) return;
+document
+
+.getElementById(
+
+"accountsChart"
+
+);
 
 if(chart){
 
@@ -425,9 +316,11 @@ chart.destroy();
 
 }
 
-chart=new Chart(canvas,{
+chart=
 
-type:"bar",
+new Chart(ctx,{
+
+type:"doughnut",
 
 data:{
 
@@ -443,8 +336,6 @@ labels:[
 
 datasets:[{
 
-label:"Amount",
-
 data:[
 
 totalCredit,
@@ -453,9 +344,7 @@ totalDebit,
 
 totalContribution
 
-],
-
-borderWidth:1
+]
 
 }]
 
@@ -469,17 +358,7 @@ plugins:{
 
 legend:{
 
-display:false
-
-}
-
-},
-
-scales:{
-
-y:{
-
-beginAtZero:true
+position:"bottom"
 
 }
 
@@ -493,40 +372,10 @@ beginAtZero:true
 
 
 
-// =========================
-// AUTO REFRESH
-// =========================
-
 setInterval(
 
-initializeDashboard,
+loadDashboard,
 
 30000
-
-);
-
-
-
-// =========================
-// LOGOUT
-// =========================
-
-window.logout=function(){
-
-sessionStorage.clear();
-
-location.href="login.html";
-
-};
-
-
-
-// =========================
-// END
-// =========================
-
-console.log(
-
-"Dashboard Loaded Successfully"
 
 );
