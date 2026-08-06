@@ -1,93 +1,182 @@
-// ==========================================
-// SAVE MEMBER
-// ==========================================
+/* =====================================================
+   CLUB ACCOUNTS MANAGEMENT SYSTEM
+   Member Master
+===================================================== */
 
-memberForm.addEventListener(
+import {
+db
+} from "./firebase.js";
 
-"submit",
+import {
 
-saveMember
+collection,
+
+doc,
+
+addDoc,
+
+getDocs,
+
+getDoc,
+
+updateDoc,
+
+deleteDoc,
+
+query,
+
+orderBy,
+
+where
+
+} from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+const memberCollection=collection(db,"members");
+
+const tbody=document.querySelector("#memberTable tbody");
+
+const memberForm=document.getElementById("memberForm");
+
+const memberNo=document.getElementById("memberNo");
+
+const joinDate=document.getElementById("joinDate");
+
+const memberName=document.getElementById("memberName");
+
+const memberMobile=document.getElementById("memberMobile");
+
+const memberPassword=document.getElementById("memberPassword");
+
+const bloodGroup=document.getElementById("bloodGroup");
+
+const memberStatus=document.getElementById("memberStatus");
+
+let editId=null;
+
+/* ===========================
+   AUTO MEMBER NUMBER
+=========================== */
+
+async function generateMemberNo(){
+
+const snap=await getDocs(
+
+query(memberCollection,orderBy("memberNo","desc"))
 
 );
 
-async function saveMember(e){
+if(snap.empty){
 
-e.preventDefault();
+memberNo.value=1;
 
-const photoInput=document.getElementById("memberPhoto");
-
-let photoURL="";
-
-
-
-// ==========================================
-// GOOGLE DRIVE UPLOAD
-// তোমার Existing Upload Script এখানে Call হবে
-// ==========================================
-
-if(photoInput.files.length>0){
-
-photoURL=await uploadMemberPhoto(
-
-photoInput.files[0]
-
-);
+return;
 
 }
 
+memberNo.value=snap.docs[0].data().memberNo+1;
 
+}
 
-// ==========================================
-// MEMBER DATA
-// ==========================================
+/* ===========================
+   UID
+=========================== */
+
+function generateUID(no){
+
+return "UID"+String(no).padStart(3,"0");
+
+}
+
+/* ===========================
+   TODAY
+=========================== */
+
+function todayDate(){
+
+const d=new Date();
+
+joinDate.value=d.toISOString().split("T")[0];
+
+}
+
+todayDate();
+
+generateMemberNo();
+
+/* ===========================
+   DUPLICATE MOBILE
+=========================== */
+
+async function mobileExists(mobile){
+
+const q=query(
+
+memberCollection,
+
+where("mobile","==",mobile)
+
+);
+
+const s=await getDocs(q);
+
+return !s.empty;
+
+}
+/* ===========================
+   SAVE MEMBER
+=========================== */
+
+memberForm.addEventListener("submit", async (e)=>{
+
+e.preventDefault();
+
+showLoader();
+
+try{
+
+const mobile=memberMobile.value.trim();
+
+if(editId===null){
+
+const exists=await mobileExists(mobile);
+
+if(exists){
+
+hideLoader();
+
+showToast("Mobile Number Already Exists","danger");
+
+return;
+
+}
+
+}
 
 const data={
 
-name:document.getElementById(
+uid:generateUID(Number(memberNo.value)),
 
-"memberName"
+memberNo:Number(memberNo.value),
 
-).value.trim(),
+name:memberName.value.trim(),
 
-mobile:document.getElementById(
+mobile:mobile,
 
-"memberMobile"
+password:mobile,
 
-).value.trim(),
+bloodGroup:bloodGroup.value,
 
-password:document.getElementById(
+photo:"",
 
-"memberMobile"
+joinDate:joinDate.value,
 
-).value.trim(),
-
-bloodGroup:document.getElementById(
-
-"memberBlood"
-
-).value,
-
-joinDate:document.getElementById(
-
-"memberJoinDate"
-
-).value,
-
-photo:photoURL,
+status:memberStatus.value,
 
 role:"member",
-
-status:"active",
 
 createdAt:new Date()
 
 };
-
-
-
-// ==========================================
-// UPDATE
-// ==========================================
 
 if(editId){
 
@@ -99,17 +188,9 @@ data
 
 );
 
-alert("Member Updated Successfully");
+showToast("Member Updated Successfully");
 
-}
-
-
-
-// ==========================================
-// ADD
-// ==========================================
-
-else{
+}else{
 
 await addDoc(
 
@@ -119,100 +200,107 @@ data
 
 );
 
-alert("Member Added Successfully");
+showToast("Member Added Successfully");
 
 }
 
-closeMemberModal();
+memberForm.reset();
+
+editId=null;
+
+todayDate();
+
+await generateMemberNo();
+
+memberPassword.value="";
+
+closeModal("memberModal");
 
 loadMembers();
 
-}
+hideLoader();
 
+}catch(err){
 
+console.error(err);
 
-// ==========================================
-// PHOTO UPLOAD
-// Existing Google Drive API ব্যবহার হবে
-// ==========================================
+hideLoader();
 
-async function uploadMemberPhoto(file){
-
-const formData=new FormData();
-
-formData.append("file",file);
-
-
-
-const response=await fetch(
-
-YOUR_GOOGLE_DRIVE_UPLOAD_URL,
-
-{
-
-method:"POST",
-
-body:formData
+showToast("Failed To Save Member","danger");
 
 }
 
-);
+});
 
-
-
-const result=await response.json();
-
-return result.url;
-
-}
-
-// ==========================================
-// LOAD MEMBERS
-// ==========================================
+/* ===========================
+   LOAD MEMBERS
+=========================== */
 
 async function loadMembers(){
 
-const q=query(
+tbody.innerHTML="";
 
-memberCollection,
+const snap=await getDocs(
 
-orderBy("joinDate","desc")
+query(memberCollection,orderBy("memberNo"))
 
 );
 
-const snapshot=await getDocs(q);
+if(snap.empty){
 
-memberTable.innerHTML="";
+tbody.innerHTML=`
 
-snapshot.forEach(item=>{
+<tr>
 
-const data=item.data();
+<td colspan="8"
 
-memberTable.innerHTML+=`
+style="text-align:center;">
+
+No Members Found
+
+</td>
+
+</tr>
+
+`;
+
+return;
+
+}
+
+snap.forEach((docSnap)=>{
+
+const m=docSnap.data();
+
+tbody.innerHTML+=`
 
 <tr>
 
 <td>
 
 <img
-class="member-photo"
-src="${data.photo||'123.png.png'}">
+
+class="avatar"
+
+src="${m.photo || '123.png.png'}">
 
 </td>
 
-<td>${data.name}</td>
+<td>${m.memberNo}</td>
 
-<td>${data.mobile}</td>
+<td>${m.name}</td>
 
-<td>${data.bloodGroup||"-"}</td>
+<td>${m.mobile}</td>
 
-<td>${data.joinDate}</td>
+<td>${m.bloodGroup||'-'}</td>
+
+<td>${m.joinDate}</td>
 
 <td>
 
-<span class="badge-active">
+<span class="badge badge-success">
 
-${data.status}
+${m.status}
 
 </span>
 
@@ -220,21 +308,39 @@ ${data.status}
 
 <td>
 
-<button
-class="action-btn edit-btn"
-onclick="editMember('${item.id}')">
+<div class="action-group">
 
-Edit
+<button
+
+class="icon-btn view-btn"
+
+onclick="viewMember('${docSnap.id}')">
+
+👁
 
 </button>
 
 <button
-class="action-btn delete-btn"
-onclick="deleteMember('${item.id}')">
 
-Delete
+class="icon-btn edit-btn"
+
+onclick="editMember('${docSnap.id}')">
+
+✏
 
 </button>
+
+<button
+
+class="icon-btn delete-btn"
+
+onclick="deleteMember('${docSnap.id}')">
+
+🗑
+
+</button>
+
+</div>
 
 </td>
 
@@ -246,126 +352,252 @@ Delete
 
 }
 
+loadMembers();
 
+/* ===========================
+   VIEW MEMBER
+=========================== */
 
-// ==========================================
-// SEARCH MEMBER
-// ==========================================
+window.viewMember = async function(id){
 
-window.searchMember=function(){
+showLoader();
 
-const value=
+try{
 
-document
+const ref = doc(db,"members",id);
 
-.getElementById(
+const snap = await getDoc(ref);
 
-"memberSearch"
+if(!snap.exists()){
 
-)
+showToast("Member Not Found","danger");
 
-.value
-
-.toLowerCase();
-
-const rows=
-
-memberTable.getElementsByTagName("tr");
-
-for(let row of rows){
-
-const text=row.innerText.toLowerCase();
-
-row.style.display=
-
-text.includes(value)
-
-? ""
-
-: "none";
-
-}
-
-};
-
-
-
-// ==========================================
-// DELETE MEMBER
-// ==========================================
-
-window.deleteMember=
-
-async function(id){
-
-if(
-
-!confirm(
-
-"Delete this member?"
-
-)
-
-){
+hideLoader();
 
 return;
 
 }
 
-await deleteDoc(
+const m = snap.data();
 
-doc(db,"members",id)
+alert(
+
+"Member No : "+m.memberNo+
+
+"\nName : "+m.name+
+
+"\nMobile : "+m.mobile+
+
+"\nBlood : "+(m.bloodGroup||"-")+
+
+"\nJoin Date : "+m.joinDate+
+
+"\nStatus : "+m.status
 
 );
 
-loadMembers();
+hideLoader();
 
-};
+}catch(err){
 
+console.error(err);
 
+hideLoader();
 
-// ==========================================
-// EDIT MEMBER
-// ==========================================
+showToast("Failed","danger");
 
-window.editMember=
+}
 
-async function(id){
+}
 
-const snapshot=
+/* ===========================
+   EDIT MEMBER
+=========================== */
 
-await getDocs(memberCollection);
+window.editMember = async function(id){
 
-snapshot.forEach(item=>{
+showLoader();
 
-if(item.id!==id)return;
+try{
 
-const data=item.data();
+const ref = doc(db,"members",id);
+
+const snap = await getDoc(ref);
+
+if(!snap.exists()){
+
+hideLoader();
+
+return;
+
+}
+
+const m = snap.data();
 
 editId=id;
 
-document.getElementById("memberName").value=data.name;
+memberNo.value=m.memberNo;
 
-document.getElementById("memberMobile").value=data.mobile;
+joinDate.value=m.joinDate;
 
-document.getElementById("memberBlood").value=data.bloodGroup;
+memberName.value=m.name;
 
-document.getElementById("memberJoinDate").value=data.joinDate;
+memberMobile.value=m.mobile;
 
-document.getElementById("memberModal").style.display="flex";
+memberPassword.value=m.password;
+
+bloodGroup.value=m.bloodGroup;
+
+memberStatus.value=m.status;
+
+openModal("memberModal");
+
+hideLoader();
+
+}catch(err){
+
+console.error(err);
+
+hideLoader();
+
+}
+
+}
+
+/* ===========================
+   DELETE MEMBER
+=========================== */
+
+window.deleteMember=function(id){
+
+confirmDelete(async()=>{
+
+showLoader();
+
+try{
+
+await deleteDoc(doc(db,"members",id));
+
+showToast("Member Deleted");
+
+loadMembers();
+
+hideLoader();
+
+}catch(err){
+
+console.error(err);
+
+hideLoader();
+
+showToast("Delete Failed","danger");
+
+}
 
 });
 
-};
+}
 
+/* ===========================
+   MEMBER COUNT
+=========================== */
 
+async function loadMemberCount(){
 
-// ==========================================
-// END
-// ==========================================
+const snap=await getDocs(memberCollection);
 
-console.log(
+const box=document.getElementById("memberCount");
 
-"Member Master Loaded"
+if(box){
 
-);
+box.innerHTML=snap.size;
+
+}
+
+}
+
+loadMemberCount();
+
+/* ===========================
+   PHOTO URL
+=========================== */
+
+window.setPhotoURL=function(url){
+
+document.getElementById("memberPhoto").dataset.url=url;
+
+}
+
+/* ===========================
+   SEARCH
+=========================== */
+
+window.searchMember=function(){
+
+const key=document
+
+.getElementById("memberSearch")
+
+.value
+
+.toLowerCase();
+
+document
+
+.querySelectorAll("#memberTable tbody tr")
+
+.forEach(row=>{
+
+row.style.display=
+
+row.innerText
+
+.toLowerCase()
+
+.includes(key)
+
+?
+
+""
+
+:
+
+"none";
+
+});
+
+}
+
+/* ===========================
+   REFRESH
+=========================== */
+
+window.refreshMembers=async function(){
+
+showLoader();
+
+await loadMembers();
+
+await loadMemberCount();
+
+await generateMemberNo();
+
+hideLoader();
+
+}
+
+/* ===========================
+   INIT
+=========================== */
+
+document.addEventListener("DOMContentLoaded",async()=>{
+
+await loadMembers();
+
+await loadMemberCount();
+
+await generateMemberNo();
+
+todayDate();
+
+});
