@@ -1,78 +1,797 @@
-.login-page{
-min-height:100vh;
+/* ==========================================================
+   CLUB ACCOUNTS MANAGEMENT SYSTEM
+   LOGIN CSS
+   Designed & Developed by Tanmoy Adak
+========================================================== */
+
+body{
+
+margin:0;
+
+padding:0;
+
+font-family:'Poppins',sans-serif;
+
+background:#F1F5F9;
+
+overflow:hidden;
+
+}
+
+.login-container{
+
+width:100%;
+
+height:100vh;
+
+display:grid;
+
+grid-template-columns:45% 55%;
+
+}
+
+.left-panel{
+
+background:linear-gradient(135deg,#2563EB,#1D4ED8);
+
 display:flex;
+
 justify-content:center;
+
 align-items:center;
-background:linear-gradient(135deg,#2563eb,#0f172a);
-padding:20px;
+
+color:#fff;
+
+padding:50px;
+
 }
 
-.login-box{
-width:100%;
-max-width:420px;
-background:#fff;
-padding:40px;
-border-radius:20px;
-box-shadow:0 20px 50px rgba(0,0,0,.25);
+.brand{
+
 text-align:center;
+
+max-width:450px;
+
 }
 
-.login-logo{
-width:90px;
-height:90px;
+.club-logo{
+
+width:150px;
+
+height:150px;
+
+object-fit:contain;
+
 margin:auto;
+
+margin-bottom:25px;
+
+cursor:pointer;
+
+user-select:none;
+
+}
+
+.brand h1{
+
+font-size:36px;
+
+font-weight:700;
+
+margin-bottom:10px;
+
+}
+
+.brand h3{
+
+font-size:20px;
+
+font-weight:500;
+
 margin-bottom:20px;
+
 }
 
-.login-box h1{
-font-size:24px;
-margin-bottom:8px;
-color:#0f172a;
+.brand p{
+
+font-size:15px;
+
+line-height:28px;
+
+opacity:.95;
+
 }
 
-.login-box p{
-font-size:14px;
-color:#64748b;
-margin-bottom:30px;
-}
+.right-panel{
 
-.login-box form{
 display:flex;
-flex-direction:column;
-gap:18px;
+
+justify-content:center;
+
+align-items:center;
+
+background:#F8FAFC;
+
+padding:40px;
+
 }
 
-.login-box button{
+.login-card{
+
 width:100%;
+
+max-width:470px;
+
+background:#fff;
+
+padding:40px;
+
+border-radius:20px;
+
+box-shadow:0 15px 45px rgba(0,0,0,.08);
+
 }
+
+.login-card h2{
+
+margin:0;
+
+font-size:30px;
+
+font-weight:700;
+
+color:#0F172A;
+
+}
+
+.login-card p{
+
+margin:8px 0 30px;
+
+color:#64748B;
+
+}
+/* ===========================
+   LOGIN TABS
+=========================== */
+
+.login-tabs{
+
+display:flex;
+
+margin-bottom:30px;
+
+background:#E2E8F0;
+
+padding:6px;
+
+border-radius:12px;
+
+}
+
+.tab-btn{
+
+flex:1;
+
+height:48px;
+
+border:none;
+
+background:transparent;
+
+border-radius:10px;
+
+font-size:15px;
+
+font-weight:600;
+
+cursor:pointer;
+
+transition:.30s;
+
+}
+
+.tab-btn.active{
+
+background:#2563EB;
+
+color:#fff;
+
+box-shadow:0 8px 18px rgba(37,99,235,.25);
+
+}
+
+/* ===========================
+   FORM
+=========================== */
+
+.login-form{
+
+display:none;
+
+animation:fade .30s ease;
+
+}
+
+.login-form.active{
+
+display:block;
+
+}
+
+.form-group{
+
+margin-bottom:18px;
+
+}
+
+.form-group label{
+
+display:block;
+
+margin-bottom:8px;
+
+font-size:14px;
+
+font-weight:600;
+
+color:#334155;
+
+}
+
+.form-group input{
+
+width:100%;
+
+height:50px;
+
+border:1px solid #CBD5E1;
+
+border-radius:12px;
+
+padding:0 16px;
+
+font-size:15px;
+
+outline:none;
+
+transition:.30s;
+
+background:#fff;
+
+}
+
+.form-group input:focus{
+
+border-color:#2563EB;
+
+box-shadow:0 0 0 4px rgba(37,99,235,.12);
+
+}
+
+/* ===========================
+   REMEMBER
+=========================== */
+
+.remember-box{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:20px;
+
+font-size:14px;
+
+}
+
+.remember-box label{
+
+display:flex;
+
+align-items:center;
+
+gap:8px;
+
+cursor:pointer;
+
+}
+
+.remember-box input{
+
+width:16px;
+
+height:16px;
+
+}
+
+.remember-box a{
+
+color:#2563EB;
+
+text-decoration:none;
+
+font-weight:500;
+
+}
+
+.remember-box a:hover{
+
+text-decoration:underline;
+
+}
+
+/* ===========================
+   LOGIN BUTTON
+=========================== */
+
+.login-btn{
+
+width:100%;
+
+height:50px;
+
+border:none;
+
+border-radius:12px;
+
+font-size:16px;
+
+font-weight:700;
+
+cursor:pointer;
+
+transition:.30s;
+
+}
+
+.btn-primary.login-btn{
+
+background:#2563EB;
+
+color:#fff;
+
+}
+
+.btn-primary.login-btn:hover{
+
+background:#1D4ED8;
+
+transform:translateY(-2px);
+
+}
+
+.btn-success.login-btn{
+
+background:#16A34A;
+
+color:#fff;
+
+}
+
+.btn-success.login-btn:hover{
+
+background:#15803D;
+
+transform:translateY(-2px);
+
+}
+
+/* ===========================
+   REGISTER
+=========================== */
+
+.register-link{
+
+text-align:center;
+
+margin-top:22px;
+
+font-size:14px;
+
+}
+
+.register-link a{
+
+color:#2563EB;
+
+font-weight:600;
+
+text-decoration:none;
+
+}
+
+.register-link a:hover{
+
+text-decoration:underline;
+
+}
+
+
+/* ===========================
+   MASTER LOGIN
+=========================== */
+
+#masterLogin{
+
+margin-top:30px;
+
+padding-top:25px;
+
+border-top:1px solid #E2E8F0;
+
+animation:fade .30s ease;
+
+}
+
+#masterLogin h3{
+
+text-align:center;
+
+margin-bottom:20px;
+
+color:#DC2626;
+
+font-size:22px;
+
+font-weight:700;
+
+}
+
+/* ===========================
+   MASTER PIN MODAL
+=========================== */
+
+.modal{
+
+position:fixed;
+
+left:0;
+
+top:0;
+
+width:100%;
+
+height:100%;
+
+background:rgba(15,23,42,.65);
+
+display:none;
+
+justify-content:center;
+
+align-items:center;
+
+backdrop-filter:blur(8px);
+
+z-index:99999;
+
+}
+
+.modal.active{
+
+display:flex;
+
+}
+
+.login-modal{
+
+width:100%;
+
+max-width:420px;
+
+background:#fff;
+
+border-radius:22px;
+
+padding:30px;
+
+box-shadow:0 20px 50px rgba(0,0,0,.25);
+
+animation:popup .30s ease;
+
+}
+
+.modal-header{
+
+text-align:center;
+
+margin-bottom:20px;
+
+}
+
+.modal-header h2{
+
+margin-bottom:10px;
+
+color:#DC2626;
+
+}
+
+.modal-header p{
+
+color:#64748B;
+
+}
+
+.modal-footer{
+
+display:flex;
+
+gap:12px;
+
+margin-top:25px;
+
+}
+
+.modal-footer button{
+
+flex:1;
+
+}
+
+/* ===========================
+   LOADER
+=========================== */
+
+.loader{
+
+position:fixed;
+
+left:0;
+
+top:0;
+
+width:100%;
+
+height:100%;
+
+background:#ffffffee;
+
+display:none;
+
+justify-content:center;
+
+align-items:center;
+
+z-index:999999;
+
+}
+
+.loader-card{
+
+text-align:center;
+
+}
+
+.loader-card img{
+
+width:90px;
+
+margin:auto;
+
+animation:spinLogo 2s linear infinite;
+
+}
+
+.loader-card h3{
+
+margin-top:15px;
+
+color:#2563EB;
+
+font-size:18px;
+
+}
+
+/* ===========================
+   TOAST
+=========================== */
+
+#toastContainer{
+
+position:fixed;
+
+top:20px;
+
+right:20px;
+
+z-index:999999;
+
+}
+
+.toast{
+
+min-width:300px;
+
+padding:15px 20px;
+
+background:#fff;
+
+border-left:5px solid #2563EB;
+
+border-radius:12px;
+
+box-shadow:0 10px 25px rgba(0,0,0,.12);
+
+margin-bottom:10px;
+
+animation:toastIn .35s ease;
+
+}
+
+/* ===========================
+   FOOTER
+=========================== */
 
 .login-footer{
-margin-top:20px;
+
+position:fixed;
+
+left:0;
+
+bottom:15px;
+
+width:100%;
+
+text-align:center;
+
+font-size:13px;
+
+color:#64748B;
+
+line-height:24px;
+
 }
 
-.login-footer a{
-color:#2563eb;
-font-size:14px;
-font-weight:600;
+/* ===========================
+   ANIMATION
+=========================== */
+
+@keyframes popup{
+
+from{
+
+opacity:0;
+
+transform:scale(.92);
+
 }
 
-.login-footer a:hover{
-text-decoration:underline;
+to{
+
+opacity:1;
+
+transform:scale(1);
+
+}
+
+}
+
+@keyframes fade{
+
+from{
+
+opacity:0;
+
+transform:translateY(10px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+
+@keyframes toastIn{
+
+from{
+
+opacity:0;
+
+transform:translateX(80px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateX(0);
+
+}
+
+}
+
+@keyframes spinLogo{
+
+0%{
+
+transform:rotate(0deg);
+
+}
+
+100%{
+
+transform:rotate(360deg);
+
+}
+
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+
+@media(max-width:992px){
+
+.login-container{
+
+grid-template-columns:1fr;
+
+}
+
+.left-panel{
+
+display:none;
+
+}
+
+.right-panel{
+
+padding:20px;
+
+}
+
+.login-card{
+
+max-width:500px;
+
+}
+
 }
 
 @media(max-width:576px){
 
-.login-box{
+.login-card{
+
 padding:25px;
+
+border-radius:18px;
+
 }
 
-.login-box h1{
-font-size:20px;
+.club-logo{
+
+width:110px;
+
+height:110px;
+
 }
 
-.login-logo{
-width:70px;
-height:70px;
+.login-card h2{
+
+font-size:26px;
+
+}
+
+.brand h1{
+
+font-size:28px;
+
+}
+
+.modal-footer{
+
+flex-direction:column;
+
 }
 
 }
