@@ -1,12 +1,12 @@
 /* ==========================================================
    CLUB ACCOUNTS MANAGEMENT SYSTEM
-  Authentication Engine V3 
+   Authentication Engine V3 
    Designed & Developed by Tanmoy Adak
 ========================================================== */
 
 import {
 
-auth,
+auth, 
 db,
 
 signInWithEmailAndPassword,
