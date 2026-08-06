@@ -5,107 +5,175 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport"
-content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>
+<title>Dashboard | Club Accounts Management System</title>
 
-Dashboard
+<link rel="icon" href="123.png.png">
 
-</title>
+<link rel="stylesheet" href="assets/css/main.css">
+<link rel="stylesheet" href="assets/css/layout.css">
+<link rel="stylesheet" href="assets/css/components.css">
+<link rel="stylesheet" href="assets/css/responsive.css">
 
-<link rel="icon"
-href="logo.png.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link rel="stylesheet"
-href="assets/css/main.css">
-
-<link rel="stylesheet"
-href="assets/css/layout.css">
-
-<link rel="stylesheet"
-href="assets/css/dashboard.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 </head>
 
 <body>
 
-<div class="dashboard">
+<div id="loader"></div>
 
-<!-- Sidebar -->
+<div class="app">
+
+<!-- ================= SIDEBAR ================= -->
 
 <aside class="sidebar">
 
 <div class="logo">
 
-<img
-src="logo.png.png">
+<img src="123.png.png" alt="Club Logo">
 
-<h2>
+<h2>Kanakpur Tarun Sangha</h2>
 
-Club Accounts
-
-</h2>
-
-<p>
-
-Management System
-
-</p>
+<p>Club Accounts Management System</p>
 
 </div>
 
 <nav>
 
-<a
-class="active"
-href="dashboard.html">
+<ul>
+
+<li>
+
+<a class="active" href="dashboard.html">
 
 🏠 Dashboard
 
 </a>
 
-<a href="credit.html">
+</li>
 
-💰 Credit
+<li class="has-submenu">
 
-</a>
+<a href="javascript:void(0)" class="menu-toggle">
 
-<a href="debit.html">
-
-💸 Debit
+👥 Members
 
 </a>
 
-<a href="member-contribution.html">
+<div class="submenu">
 
-👥 Member Contribution
+<a href="member-master.html">Member Master</a>
+
+<a href="#">Pending Registration</a>
+
+<a href="#">Blood Group</a>
+
+<a href="#">Member ID Card</a>
+
+</div>
+
+</li>
+
+<li class="has-submenu">
+
+<a href="javascript:void(0)" class="menu-toggle">
+
+💼 Programs
 
 </a>
 
-<a href="cash-in-hand.html">
+<div class="submenu">
 
-💵 Cash In Hand
+<a href="#">Financial Year</a>
+
+<a href="#">Programs</a>
+
+<a href="#">Categories</a>
+
+</div>
+
+</li>
+
+<li class="has-submenu">
+
+<a href="javascript:void(0)" class="menu-toggle">
+
+💰 Accounts Center
 
 </a>
 
-<a href="statement.html">
+<div class="submenu">
+
+<a href="#">Credit</a>
+
+<a href="#">Debit</a>
+
+<a href="#">Member Contribution</a>
+
+<a href="#">Club Cash</a>
+
+</div>
+
+</li>
+
+<li>
+
+<a href="#">
 
 📄 Statement
 
 </a>
 
-<a href="member-master.html">
+</li>
 
-👤 Member Master
+<li class="has-submenu">
+
+<a href="javascript:void(0)" class="menu-toggle">
+
+📁 Files
 
 </a>
 
-<a href="admin-management.html">
+<div class="submenu">
+
+<a href="#">Gallery</a>
+
+<a href="#">Agreement Copies</a>
+
+<a href="#">Documents</a>
+
+</div>
+
+</li>
+
+<li class="has-submenu">
+
+<a href="javascript:void(0)" class="menu-toggle">
 
 👑 Admin Management
 
 </a>
+
+<div class="submenu">
+
+<a href="admin-management.html">Admin List</a>
+
+<a href="#">Permissions</a>
+
+<a href="#">Activity Log</a>
+
+<a href="#">Admin Reports</a>
+
+</div>
+
+</li>
+
+<li>
 
 <a href="settings.html">
 
@@ -113,146 +181,149 @@ href="dashboard.html">
 
 </a>
 
+</li>
+
+</ul>
+
 </nav>
 
 </aside>
 
-<!-- Content -->
+<!-- ================= MAIN ================= -->
 
-<div class="content">
+<div class="main">
 
-<header class="top-header">
+  <!-- ================= HEADER ================= -->
 
-<div>
+<header class="header">
 
-<h1>
+<div style="display:flex;align-items:center;gap:15px;">
 
-Dashboard
+<button id="menuBtn" class="btn btn-primary">
 
-</h1>
+☰
 
-<p>
-
-Club Accounts Management System
-
-</p>
-
-</div>
-
-<div class="profile">
-
-<img
-src="assets/images/default-user.png">
+</button>
 
 <div>
 
-<strong>
+<h2>Dashboard</h2>
 
-Master Admin
-
-</strong>
-
-<br>
-
-<small>
-
-Online
-
-</small>
+<p>Club Accounts Management System</p>
 
 </div>
+
+</div>
+
+<div style="display:flex;align-items:center;gap:15px;">
+
+<button class="btn">
+
+🔔
+
+</button>
+
+<button class="btn">
+
+👤 Master Admin
+
+</button>
 
 </div>
 
 </header>
 
-<div class="grid-4">
+<!-- ================= PAGE ================= -->
+
+<div class="page fade">
+
+<div class="page-header">
+
+<div>
+
+<h1 class="page-title">
+
+Dashboard
+
+</h1>
+
+<p class="page-subtitle">
+
+Welcome to Club Accounts Management System
+
+</p>
+
+</div>
+
+</div>
+
+<!-- ================= DASHBOARD CARDS ================= -->
+
+<div class="stats-grid">
+
+<div class="stat-card">
+
+<h4>Total Credit</h4>
+
+<h2>₹0.00</h2>
+
+<span>Today's Collection</span>
+
+</div>
+
+<div class="stat-card">
+
+<h4>Total Debit</h4>
+
+<h2>₹0.00</h2>
+
+<span>Today's Expense</span>
+
+</div>
+
+<div class="stat-card">
+
+<h4>Club Cash</h4>
+
+<h2>₹0.00</h2>
+
+<span>Cash In Hand</span>
+
+</div>
+
+<div class="stat-card">
+
+<h4>Total Members</h4>
+
+<h2>0</h2>
+
+<span>Active Members</span>
+
+</div>
+
+</div>
+
+<!-- ================= RECENT CREDIT ================= -->
 
 <div class="card">
 
-<h4>
-
-Total Credit
-
-</h4>
-
-<h2 id="totalCredit">
-
-₹0
-
-</h2>
-
-</div>
-
-<div class="card">
-
-<h4>
-
-Total Debit
-
-</h4>
-
-<h2 id="totalDebit">
-
-₹0
-
-</h2>
-
-</div>
-
-<div class="card">
-
-<h4>
-
-Cash In Hand
-
-</h4>
-
-<h2 id="cashInHand">
-
-₹0
-
-</h2>
-
-</div>
-
-<div class="card">
-
-<h4>
-
-Members
-
-</h4>
-
-<h2 id="totalMembers">
-
-0
-
-</h2>
-
-</div>
-
-</div>
-
-<div class="content-card">
+<div class="page-header">
 
 <h2>
 
-Accounts Overview
+Recent Credit
 
 </h2>
 
-<canvas id="accountsChart"></canvas>
+<a href="#">
+
+View All
+
+</a>
 
 </div>
 
-<div class="content-card">
-
-<h2>
-
-Recent Transactions
-
-</h2>
+<div class="table-card">
 
 <table>
 
@@ -262,9 +333,9 @@ Recent Transactions
 
 <th>Date</th>
 
-<th>Type</th>
-
 <th>Program</th>
+
+<th>Category</th>
 
 <th>Amount</th>
 
@@ -272,13 +343,179 @@ Recent Transactions
 
 </thead>
 
-<tbody id="recentTransactions">
+<tbody>
 
 <tr>
 
-<td colspan="4">
+<td colspan="4" style="text-align:center;">
 
-No Data
+No Credit Found
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<!-- ================= RECENT DEBIT ================= -->
+
+<div class="card">
+
+<div class="page-header">
+
+<h2>
+
+Recent Debit
+
+</h2>
+
+<a href="#">
+
+View All
+
+</a>
+
+</div>
+
+<div class="table-card">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Date</th>
+
+<th>Program</th>
+
+<th>Category</th>
+
+<th>Amount</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td colspan="4" style="text-align:center;">
+
+No Debit Found
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+  <!-- ================= PROGRAM SUMMARY ================= -->
+
+<div class="card">
+
+<div class="page-header">
+
+<h2>
+
+Program Summary
+
+</h2>
+
+</div>
+
+<div class="table-card">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Program</th>
+
+<th>Credit</th>
+
+<th>Debit</th>
+
+<th>Balance</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td colspan="4" style="text-align:center;">
+
+No Program Found
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<!-- ================= ACTIVITY ================= -->
+
+<div class="card">
+
+<div class="page-header">
+
+<h2>
+
+Recent Activity
+
+</h2>
+
+</div>
+
+<div class="table-card">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Date</th>
+
+<th>Activity</th>
+
+<th>User</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td colspan="3" style="text-align:center;">
+
+No Activity Found
 
 </td>
 
@@ -294,11 +531,45 @@ No Data
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+
+© 2026 Kanakpur Tarun Sangha |
+Club Accounts Management System |
+Designed & Developed by Tanmoy Adak
+
+</footer>
+
+</div>
+
+</div>
+
+<!-- ================= TOAST ================= -->
+
+<div id="toastContainer"></div>
+
+<!-- ================= LOADER ================= -->
+
+<div id="loader" style="display:none;">
+
+<div class="loader-box">
+
+<img src="123.png.png" width="80">
+
+<h3>Loading...</h3>
+
+</div>
+
+</div>
+
+<!-- ================= SCRIPT ================= -->
 
 <script type="module" src="assets/js/firebase.js"></script>
 
-<script type="module" src="assets/js/dashboard.js"></script>
+<script type="module" src="assets/js/auth.js"></script>
+
+<script src="assets/js/app.js"></script>
 
 </body>
 
