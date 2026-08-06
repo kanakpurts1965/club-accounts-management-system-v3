@@ -1,81 +1,540 @@
-// ==========================================
-// MEMBER MASTER V3
-// Club Accounts Management System
-// Designed & Developed by Tanmoy Adak
-// ==========================================
+<!DOCTYPE html>
+<html lang="en">
 
-import { db } from "./firebase.js";
+<head>
 
-import {
+<meta charset="UTF-8">
 
-collection,
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-addDoc,
+<title>Member Master</title>
 
-getDocs,
+<link rel="icon" href="123.png.png">
 
-updateDoc,
+<link rel="stylesheet" href="assets/css/main.css">
+<link rel="stylesheet" href="assets/css/layout.css">
+<link rel="link" href="assets/css/components.css">
+<link rel="stylesheet" href="assets/css/responsive.css">
+<link rel="stylesheet" href="assets/css/member-master.css">
 
-deleteDoc,
+</head>
 
-doc,
+<body>
 
-query,
+<div class="app">
 
-orderBy
+<!-- ================= Sidebar ================= -->
 
-}
+<aside class="sidebar">
 
-from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+<div class="logo">
 
-const memberCollection=collection(db,"members");
+<img src="123.png.png">
 
-const memberTable=document.getElementById("memberTable");
+<h2>Kanakpur Tarun Sangha</h2>
 
-const memberForm=document.getElementById("memberForm");
+<p>Club Accounts Management System</p>
 
-let editId=null;
+</div>
 
-// ==========================================
-// AUTO JOIN DATE
-// ==========================================
+<nav>
 
-window.onload=()=>{
+<ul>
 
-const today=new Date();
+<li>
 
-document.getElementById("memberJoinDate").value=
+<a href="dashboard.html">
 
-today.toISOString().split("T")[0];
+🏠 Dashboard
 
-loadMembers();
+</a>
 
-};
+</li>
 
-// ==========================================
-// OPEN MODAL
-// ==========================================
+<li class="menu-open">
 
-window.openMemberModal=()=>{
+<a class="active">
 
-editId=null;
+👥 Members
 
-memberForm.reset();
+</a>
 
-document.getElementById("memberJoinDate").value=
+<div class="submenu">
 
-new Date().toISOString().split("T")[0];
+<a class="active" href="member-master.html">
 
-document.getElementById("memberModal").style.display="flex";
+Member Master
 
-};
+</a>
 
-// ==========================================
-// CLOSE MODAL
-// ==========================================
+<a href="#">
 
-window.closeMemberModal=()=>{
+Pending Registration
 
-document.getElementById("memberModal").style.display="none";
+</a>
 
-};
+<a href="#">
+
+Blood Group
+
+</a>
+
+<a href="#">
+
+Member ID Card
+
+</a>
+
+</div>
+
+</li>
+
+<li>
+
+<a href="program.html">
+
+💼 Programs
+
+</a>
+
+</li>
+
+<li>
+
+<a href="accounts-center.html">
+
+💰 Accounts Center
+
+</a>
+
+</li>
+
+<li>
+
+<a href="statement.html">
+
+📄 Statement
+
+</a>
+
+</li>
+
+<li>
+
+<a href="files.html">
+
+📁 Files
+
+</a>
+
+</li>
+
+<li>
+
+<a href="admin-management.html">
+
+👑 Admin Management
+
+</a>
+
+</li>
+
+<li>
+
+<a href="settings.html">
+
+⚙ Settings
+
+</a>
+
+</li>
+
+</ul>
+
+</nav>
+
+</aside>
+
+<!-- ================= Main ================= -->
+
+<div class="main">
+
+<header class="header">
+
+<div style="display:flex;align-items:center;gap:15px;">
+
+<button id="menuBtn" class="btn btn-primary">
+
+☰
+
+</button>
+
+<div>
+
+<h2>
+
+Member Master
+
+</h2>
+
+<p>
+
+Manage Club Members
+
+</p>
+
+</div>
+
+</div>
+
+<div>
+
+<button class="btn btn-success"
+
+onclick="openModal('memberModal')">
+
++ Add Member
+
+</button>
+
+</div>
+
+</header>
+
+<div class="page fade">
+
+<div class="page-header">
+
+<div>
+
+<h1 class="page-title">
+
+Member Master
+
+</h1>
+
+<p class="page-subtitle">
+
+Manage All Club Members
+
+</p>
+
+</div>
+
+</div>
+
+<div class="toolbar">
+
+<div class="search-box">
+
+<input
+
+type="text"
+
+id="memberSearch"
+
+placeholder="Search Member..."
+
+onkeyup="searchTable('memberSearch','memberTable')">
+
+</div>
+
+</div>
+
+<div class="table-card">
+
+<table id="memberTable">
+
+<thead>
+
+<tr>
+
+<th>Photo</th>
+
+<th>No</th>
+
+<th>Name</th>
+
+<th>Mobile</th>
+
+<th>Blood</th>
+
+<th>Join Date</th>
+
+<th>Status</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<!-- Firestore Data -->
+
+</tbody>
+
+</table>
+
+</div>
+<!-- ================= Add Member Modal ================= -->
+
+<div class="modal" id="memberModal">
+
+<div class="modal-box">
+
+<div class="page-header">
+
+<div>
+
+<h2>Add New Member</h2>
+
+<p>Member Registration Form</p>
+
+</div>
+
+<button class="btn btn-danger"
+
+onclick="closeModal('memberModal')">
+
+✕
+
+</button>
+
+</div>
+
+<form id="memberForm">
+
+<div class="form-grid">
+
+<div class="form-group full">
+
+<label>Photo</label>
+
+<input type="file"
+
+id="memberPhoto"
+
+accept="image/*">
+
+</div>
+
+<div class="form-group">
+
+<label>Member No</label>
+
+<input
+
+type="text"
+
+id="memberNo"
+
+readonly>
+
+</div>
+
+<div class="form-group">
+
+<label>Join Date</label>
+
+<input
+
+type="date"
+
+id="joinDate"
+
+readonly>
+
+</div>
+
+<div class="form-group full">
+
+<label>Full Name *</label>
+
+<input
+
+type="text"
+
+id="memberName"
+
+required>
+
+</div>
+
+<div class="form-group">
+
+<label>Mobile Number *</label>
+
+<input
+
+type="tel"
+
+id="memberMobile"
+
+maxlength="10"
+
+required>
+
+</div>
+
+<div class="form-group">
+
+<label>Blood Group</label>
+
+<select id="bloodGroup">
+
+<option value="">Select</option>
+
+<option>A+</option>
+
+<option>A-</option>
+
+<option>B+</option>
+
+<option>B-</option>
+
+<option>AB+</option>
+
+<option>AB-</option>
+
+<option>O+</option>
+
+<option>O-</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>Status</label>
+
+<select id="memberStatus">
+
+<option value="active">
+
+Active
+
+</option>
+
+<option value="inactive">
+
+Inactive
+
+</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>Password</label>
+
+<input
+
+type="text"
+
+id="memberPassword"
+
+readonly>
+
+</div>
+
+</div>
+
+<div class="toolbar"
+
+style="margin-top:25px;justify-content:flex-end;">
+
+<button
+
+type="button"
+
+class="btn"
+
+onclick="closeModal('memberModal')">
+
+Cancel
+
+</button>
+
+<button
+
+type="submit"
+
+class="btn btn-success">
+
+Save Member
+
+</button>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+<!-- ================= Footer ================= -->
+
+<footer class="footer">
+
+© 2026 Kanakpur Tarun Sangha |
+Club Accounts Management System |
+Designed & Developed by Tanmoy Adak
+
+</footer>
+
+</div>
+
+</div>
+
+<!-- ================= Loader ================= -->
+
+<div id="loader" style="display:none;">
+
+<div class="loader-box">
+
+<img src="123.png.png" alt="Logo" width="80">
+
+<h3>Loading...</h3>
+
+</div>
+
+</div>
+
+<!-- ================= Toast ================= -->
+
+<div id="toastContainer"></div>
+
+<!-- ================= Scripts ================= -->
+
+<script type="module" src="assets/js/firebase.js"></script>
+
+<script type="module" src="assets/js/member-master.js"></script>
+
+<script src="assets/js/app.js"></script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+document.getElementById("joinDate").value=today();
+
+document.getElementById("memberPassword").value="";
+
+});
+
+document.getElementById("memberMobile").addEventListener("keyup",function(){
+
+document.getElementById("memberPassword").value=this.value;
+
+});
+
+</script>
+
+</body>
+
+</html>
