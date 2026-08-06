@@ -1,55 +1,53 @@
 /* ==========================================================
    CLUB ACCOUNTS MANAGEMENT SYSTEM
-   Firebase Engine V3
+   Firebase Engine V4
    Designed & Developed by Tanmoy Adak
 ========================================================== */
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-
+/* Firebase App */
 import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
-getAuth,
-signInWithEmailAndPassword,
-signOut,
-onAuthStateChanged
-
-} from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-
+/* Firebase Auth */
 import {
+    getAuth,
+    signInWithEmailAndPassword,
+    signOut,
+    onAuthStateChanged,
+    sendPasswordResetEmail
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
-getFirestore,
+/* Firestore */
+import {
+    getFirestore,
+    enableIndexedDbPersistence,
 
-enableIndexedDbPersistence,
+    collection,
+    doc,
 
-collection,
+    addDoc,
+    setDoc,
+    updateDoc,
+    deleteDoc,
 
-doc,
+    getDoc,
+    getDocs,
 
-addDoc,
+    query,
+    where,
+    orderBy,
+    limit,
 
-setDoc,
+    serverTimestamp,
+    Timestamp
 
-updateDoc,
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
-deleteDoc,
+/* ==========================================================
+   FIREBASE CONFIG
+========================================================== */
 
-getDoc,
-
-getDocs,
-
-query,
-
-where,
-
-orderBy,
-
-limit,
-
-Timestamp,
-
-serverTimestamp
-
-} from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 const firebaseConfig={
 
 apiKey:"AIzaSyAIdEgUsC2l2I2BLBU604LUGU9wxzz51P8",
@@ -65,93 +63,96 @@ messagingSenderId:"501949137419",
 appId:"1:501949137419:web:cddd127f118fd2efecbd0e"
 
 };
+
+/* ==========================================================
+   INITIALIZE
+========================================================== */
+
 const app=initializeApp(firebaseConfig);
 
 const auth=getAuth(app);
 
 const db=getFirestore(app);
+
+/* ==========================================================
+   OFFLINE CACHE
+========================================================== */
+
 enableIndexedDbPersistence(db)
 
-.then(()=>{
+.catch((e)=>{
 
-console.log("Firestore Offline Ready");
-
-})
-
-.catch((err)=>{
-
-console.log(err);
-
-});
-window.addEventListener("online",()=>{
-
-console.log("Internet Connected");
+console.log(e);
 
 });
 
-window.addEventListener("offline",()=>{
+/* ==========================================================
+   COLLECTIONS
+========================================================== */
 
-console.log("Internet Disconnected");
+const adminsRef=collection(db,"admins");
 
-});
-export const adminsRef=
+const membersRef=collection(db,"members");
 
-collection(db,"admins");
+const yearsRef=collection(db,"financialYears");
 
-export const membersRef=
+const programsRef=collection(db,"programs");
 
-collection(db,"members");
+const categoriesRef=collection(db,"categories");
 
-export const yearRef=
+const creditsRef=collection(db,"credits");
 
-collection(db,"financialYears");
+const debitsRef=collection(db,"debits");
 
-export const programRef=
+const contributionsRef=collection(db,"memberContributions");
 
-collection(db,"programs");
+const cashRef=collection(db,"clubCash");
 
-export const categoryRef=
+const statementsRef=collection(db,"statements");
 
-collection(db,"categories");
+const activityRef=collection(db,"activityLogs");
 
-export const creditRef=
+const settingsRef=collection(db,"settings");
 
-collection(db,"credits");
+/* ==========================================================
+   EXPORT
+========================================================== */
 
-export const debitRef=
-
-collection(db,"debits");
-
-export const contributionRef=
-
-collection(db,"memberContributions");
-
-export const cashRef=
-
-collection(db,"clubCash");
-
-export const statementRef=
-
-collection(db,"statements");
-
-export const activityRef=
-
-collection(db,"activityLogs");
-
-export const settingsRef=
-
-collection(db,"settings");
 export{
 
 app,
 
-db,
-
 auth,
 
-doc,
+db,
+
+adminsRef,
+
+membersRef,
+
+yearsRef,
+
+programsRef,
+
+categoriesRef,
+
+creditsRef,
+
+debitsRef,
+
+contributionsRef,
+
+cashRef,
+
+statementsRef,
+
+activityRef,
+
+settingsRef,
 
 collection,
+
+doc,
 
 addDoc,
 
@@ -173,73 +174,16 @@ orderBy,
 
 limit,
 
-Timestamp,
-
 serverTimestamp,
 
+Timestamp,
+
 signInWithEmailAndPassword,
+
+sendPasswordResetEmail,
 
 signOut,
 
 onAuthStateChanged
 
 };
-/* ==========================================================
-   COLLECTION REFERENCES
-========================================================== */
-
-export const adminsRef = collection(db,"admins");
-
-export const membersRef = collection(db,"members");
-
-export const financialYearsRef = collection(db,"financialYears");
-
-export const programsRef = collection(db,"programs");
-
-export const categoriesRef = collection(db,"categories");
-
-export const creditsRef = collection(db,"credits");
-
-export const debitsRef = collection(db,"debits");
-
-export const contributionsRef = collection(db,"memberContributions");
-
-export const cashRef = collection(db,"clubCash");
-
-export const statementsRef = collection(db,"statements");
-
-export const activityLogsRef = collection(db,"activityLogs");
-
-export const settingsRef = collection(db,"settings");
-
-/* ==========================================================
-   COMMON HELPERS
-========================================================== */
-
-export function now(){
-
-return serverTimestamp();
-
-}
-
-export function today(){
-
-return new Date().toISOString().split("T")[0];
-
-}
-
-export function currentTime(){
-
-return new Date().toLocaleTimeString();
-
-}
-
-/* ==========================================================
-   FIREBASE READY
-========================================================== */
-
-console.log(
-
-"Club Accounts Management System Ready"
-
-);
