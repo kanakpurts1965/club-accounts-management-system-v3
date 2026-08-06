@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Login | Club Accounts Management System</title>
+<title>Club Accounts Management System | Login</title>
 
 <link rel="icon" href="123.png.png">
 
@@ -20,71 +20,55 @@
 
 <body>
 
-<div class="login-container">
+<div class="login-page">
 
-<div class="left-panel">
+<div class="login-left">
 
-<img src="123.png.png"
+<div class="brand">
 
-id="clubLogo"
+<img src="123.png.png" id="clubLogo" class="club-logo" alt="Club Logo">
 
-class="club-logo">
+<h1>Kanakpur Tarun Sangha</h1>
 
-<h1>
-
-Kanakpur Tarun Sangha
-
-</h1>
-
-<h3>
-
-Club Accounts Management System
-
-</h3>
+<h3>Club Accounts Management System</h3>
 
 <p>
 
-Transparency • Digital Accounting • Smart Management
+Transparent • Secure • Smart Club Management
 
 </p>
 
 </div>
 
-<div class="right-panel">
+</div>
+
+<div class="login-right">
 
 <div class="login-card">
 
-<h2>
+<div class="login-header">
 
-Welcome
+<h2>Welcome</h2>
 
-</h2>
+<p>Select Login Type</p>
 
-<p>
-
-Select Login Type
-
-</p>
-
-<!-- LOGIN TAB -->
+</div>
 
 <div class="login-tabs">
 
 <button
-
+type="button"
 class="tab-btn active"
-
-onclick="showLogin('member')">
+id="memberTab">
 
 👤 Member
 
 </button>
 
 <button
-
+type="button"
 class="tab-btn"
-
-onclick="showLogin('admin')">
+id="adminTab">
 
 👨‍💼 Admin
 
@@ -92,13 +76,11 @@ onclick="showLogin('admin')">
 
 </div>
 
-<!-- MEMBER LOGIN -->
+<!-- ================= MEMBER LOGIN ================= -->
 
 <div
-
-id="memberLogin"
-
-class="login-form">
+class="login-form active"
+id="memberLogin">
 
 <form id="memberLoginForm">
 
@@ -111,13 +93,11 @@ Mobile Number
 </label>
 
 <input
-
 type="text"
-
 id="memberMobile"
-
+maxlength="10"
+autocomplete="off"
 placeholder="Enter Mobile Number"
-
 required>
 
 </div>
@@ -131,42 +111,62 @@ Password
 </label>
 
 <input
-
 type="password"
-
 id="memberPassword"
-
 placeholder="Enter Password"
-
 required>
 
 </div>
 
+<div class="remember-box">
+
+<label>
+
+<input
+type="checkbox"
+id="memberRemember">
+
+Remember Me
+
+</label>
+
+<a href="#">
+
+Forgot Password?
+
+</a>
+
+</div>
+
 <button
-
 type="submit"
-
-class="btn btn-primary"
-
-style="width:100%;">
+class="btn btn-primary login-btn">
 
 Member Login
 
 </button>
 
+<div class="register-link">
+
+New Member?
+
+<a href="#">
+
+Register Here
+
+</a>
+
+</div>
+
 </form>
 
 </div>
 
-<!-- ADMIN LOGIN -->
+<!-- ================= ADMIN LOGIN ================= -->
 
 <div
-
-id="adminLogin"
-
 class="login-form"
-
-style="display:none;">
+id="adminLogin">
 
 <form id="adminLoginForm">
 
@@ -179,13 +179,10 @@ Mobile / Email
 </label>
 
 <input
-
 type="text"
-
 id="adminId"
-
+autocomplete="off"
 placeholder="Enter Mobile or Email"
-
 required>
 
 </div>
@@ -199,24 +196,36 @@ Password
 </label>
 
 <input
-
 type="password"
-
 id="adminPassword"
-
 placeholder="Enter Password"
-
 required>
 
 </div>
 
+<div class="remember-box">
+
+<label>
+
+<input
+type="checkbox"
+id="adminRemember">
+
+Remember Me
+
+</label>
+
+<a href="#">
+
+Forgot Password?
+
+</a>
+
+</div>
+
 <button
-
 type="submit"
-
-class="btn btn-success"
-
-style="width:100%;">
+class="btn btn-success login-btn">
 
 Admin Login
 
@@ -225,59 +234,49 @@ Admin Login
 </form>
 
 </div>
-<!-- ================= MASTER PIN MODAL ================= -->
+
+
+   <!-- ================= MASTER PIN MODAL ================= -->
 
 <div class="modal" id="masterPinModal">
 
-<div class="modal-box" style="max-width:420px;">
+<div class="modal-box login-modal">
 
-<h2 style="text-align:center;">
+<div class="modal-header">
 
-👑 Master Security
+<h2>👑 Master Security</h2>
 
-</h2>
+<p>Enter Master PIN</p>
 
-<p style="text-align:center;margin:15px 0;">
-
-Enter Master PIN
-
-</p>
+</div>
 
 <div class="form-group">
 
+<label>Master PIN</label>
+
 <input
-
 type="password"
-
 id="masterPin"
-
 placeholder="Enter Master PIN"
-
 autocomplete="off">
 
 </div>
 
-<div style="display:flex;gap:10px;margin-top:20px;">
+<div class="modal-footer">
 
 <button
-
+type="button"
 class="btn"
-
-style="flex:1;"
-
-onclick="closeModal('masterPinModal')">
+id="cancelMasterPin">
 
 Cancel
 
 </button>
 
 <button
-
+type="button"
 class="btn btn-danger"
-
-style="flex:1;"
-
-onclick="verifyMasterPin()">
+id="continueMasterPin">
 
 Continue
 
@@ -288,13 +287,13 @@ Continue
 </div>
 
 </div>
-<!-- HIDDEN MASTER LOGIN -->
+
+<!-- ================= MASTER LOGIN ================= -->
 
 <div
-
+class="login-form"
 id="masterLogin"
-
-style="display:none; margin-top:30px;">
+style="display:none;">
 
 <hr>
 
@@ -315,12 +314,10 @@ Email
 </label>
 
 <input
-
 type="email"
-
 id="masterEmail"
-
-placeholder="Master Email">
+placeholder="Enter Master Email"
+autocomplete="off">
 
 </div>
 
@@ -333,22 +330,15 @@ Password
 </label>
 
 <input
-
 type="password"
-
-id="masterPass"
-
-placeholder="Master Password">
+id="masterPassword"
+placeholder="Enter Password">
 
 </div>
 
 <button
-
 type="submit"
-
-class="btn btn-danger"
-
-style="width:100%;">
+class="btn btn-danger login-btn">
 
 Master Login
 
@@ -358,7 +348,6 @@ Master Login
 
 </div>
 
-
 </div>
 
 </div>
@@ -367,13 +356,19 @@ Master Login
 
 <!-- ================= Loader ================= -->
 
-<div id="loader" style="display:none;">
+<div id="loader" class="loader">
 
-<div class="loader-box">
+<div class="loader-card">
 
-<img src="123.png.png" width="80">
+<img
+src="123.png.png"
+alt="Logo">
 
-<h3>Loading...</h3>
+<h3>
+
+Loading...
+
+</h3>
 
 </div>
 
@@ -383,86 +378,26 @@ Master Login
 
 <div id="toastContainer"></div>
 
-<!-- ================= Script ================= -->
+<footer class="login-footer">
 
-<script>
+© 2026 Kanakpur Tarun Sangha
 
-/* ===========================
-   DESKTOP MASTER
-=========================== */
+<br>
 
-document.addEventListener("keydown",(e)=>{
+Club Accounts Management System
 
-if(e.ctrlKey && e.shiftKey && e.key.toLowerCase()=="a"){
+<br>
 
-openModal("masterPinModal");
+Designed & Developed by Tanmoy Adak
 
-}
-
-});
-
-/* ===========================
-   MOBILE MASTER
-=========================== */
-
-const logo=document.getElementById("clubLogo");
-
-let holdTimer;
-
-logo.addEventListener("touchstart",()=>{
-
-holdTimer=setTimeout(()=>{
-
-openModal("masterPinModal");
-
-},5000);
-
-});
-
-logo.addEventListener("touchend",()=>{
-
-clearTimeout(holdTimer);
-
-});
-
-logo.addEventListener("touchcancel",()=>{
-
-clearTimeout(holdTimer);
-
-});
-
-/* ===========================
-   VERIFY PIN
-=========================== */
-
-function verifyMasterPin(){
-
-const pin=document.getElementById("masterPin").value;
-
-if(pin==="123456"){
-
-closeModal("masterPinModal");
-
-document.getElementById("masterLogin").style.display="block";
-
-document.getElementById("masterPin").value="";
-
-}else{
-
-alert("Invalid Master PIN");
-
-}
-}
-
-</script>
+</footer>
 
 <script type="module" src="assets/js/firebase.js"></script>
 
 <script type="module" src="assets/js/auth.js"></script>
 
-<script src="assets/js/app.js"></script>
+<script src="assets/js/login.js"></script>
 
 </body>
 
 </html>
-  
