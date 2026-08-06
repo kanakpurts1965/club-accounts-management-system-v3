@@ -1,56 +1,262 @@
-import { auth } from "./firebase.js";
+/* ==========================================================
+   CLUB ACCOUNTS MANAGEMENT SYSTEM
+   Authentication Engine V3
+   Designed & Developed by Tanmoy Adak
+========================================================== */
 
 import {
 
+auth,
+db,
+
 signInWithEmailAndPassword,
-
-sendPasswordResetEmail,
-
+signOut,
 onAuthStateChanged,
 
-signOut
+doc,
+getDoc,
+getDocs,
+query,
+where,
+
+adminsRef,
+membersRef
 
 }
 
-from
+from "./firebase.js";
 
-"https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+/* ===========================================
+   SESSION
+=========================================== */
 
-const loginForm=
+const SESSION_KEY="club_accounts_session";
 
-document.getElementById(
+/* ===========================================
+   SAVE SESSION
+=========================================== */
 
-"loginForm"
+function saveSession(data){
+
+localStorage.setItem(
+
+SESSION_KEY,
+
+JSON.stringify(data)
 
 );
 
-if(loginForm){
+}
 
-loginForm.addEventListener(
+/* ===========================================
+   GET SESSION
+=========================================== */
 
-"submit",
+export function getSession(){
 
-async(e)=>{
+const s=
 
-e.preventDefault();
+localStorage.getItem(SESSION_KEY);
 
-const email=
+return s?JSON.parse(s):null;
 
-document.getElementById(
+}
+
+/* ===========================================
+   CLEAR SESSION
+=========================================== */
+
+export function clearSession(){
+
+localStorage.removeItem(
+
+SESSION_KEY
+
+);
+
+}
+
+/* ===========================================
+   MEMBER LOGIN
+=========================================== */
+
+export async function memberLogin(
+
+mobile,
+
+password
+
+){
+
+const q=query(
+
+membersRef,
+
+where("mobile","==",mobile)
+
+);
+
+const snap=
+
+await getDocs(q);
+
+if(snap.empty){
+
+throw new Error(
+
+"Member Not Found"
+
+);
+
+}
+
+const member=
+
+snap.docs[0].data();
+
+if(member.status!="active"){
+
+throw new Error(
+
+"Member Account Disabled"
+
+);
+
+}
+
+if(member.password!==password){
+
+throw new Error(
+
+"Wrong Password"
+
+);
+
+}
+
+saveSession({
+
+uid:member.uid,
+
+memberNo:member.memberNo,
+
+name:member.name,
+
+role:"member",
+
+mobile:member.mobile
+
+});
+
+location.href="viewer.html";
+
+}
+
+/* ==========================================================
+   ADMIN LOGIN
+========================================================== */
+
+export async function adminLogin(
+
+id,
+
+password
+
+){
+
+const q=query(
+
+adminsRef,
+
+where(
+
+id.includes("@")
+
+?
 
 "email"
 
-).value;
+:
 
-const password=
+"mobile",
 
-document.getElementById(
+"==",
 
-"password"
+id
 
-).value;
+)
 
-try{
+);
+
+const snap=
+
+await getDocs(q);
+
+if(snap.empty){
+
+throw new Error(
+
+"Admin Not Found"
+
+);
+
+}
+
+const admin=
+
+snap.docs[0].data();
+
+if(admin.status!="active"){
+
+throw new Error(
+
+"Admin Account Disabled"
+
+);
+
+}
+
+if(admin.password!==password){
+
+throw new Error(
+
+"Wrong Password"
+
+);
+
+}
+
+saveSession({
+
+uid:admin.uid,
+
+name:admin.name,
+
+role:admin.role,
+
+email:admin.email,
+
+mobile:admin.mobile
+
+});
+
+location.href="dashboard.html";
+
+}
+
+/* ==========================================================
+   MASTER LOGIN
+========================================================== */
+
+export async function masterLogin(
+
+email,
+
+password
+
+){
+
+const user=
 
 await signInWithEmailAndPassword(
 
@@ -62,134 +268,96 @@ password
 
 );
 
-location.href=
+const ref=
 
-"dashboard.html";
+doc(
 
-}
+db,
 
-catch(error){
+"admins",
 
-alert(
+"master"
 
-error.message
+);
+
+const snap=
+
+await getDoc(ref);
+
+if(!snap.exists()){
+
+throw new Error(
+
+"Master Admin Not Found"
 
 );
 
 }
 
-}
+const master=
+
+snap.data();
+
+if(master.status!="active"){
+
+throw new Error(
+
+"Master Disabled"
 
 );
 
 }
 
-const forgot=
+saveSession({
 
-document.getElementById(
+uid:user.user.uid,
 
-"forgotPassword"
+name:master.name,
 
-);
+role:"master",
 
-if(forgot){
+email:master.email,
 
-forgot.onclick=
+mobile:master.mobile
 
-async()=>{
+});
 
-const email=
+location.href="dashboard.html";
 
-document.getElementById(
+}
 
-"email"
+/* ==========================================================
+   LOGOUT
+========================================================== */
 
-).value;
+export async function logout(){
 
-if(!email){
+await signOut(auth);
 
-alert(
+clearSession();
 
-"Enter your email first."
+location.replace("login.html");
 
-);
+}
+
+/* ==========================================================
+   SESSION CHECK
+========================================================== */
+
+export function requireLogin(){
+
+const session=
+
+getSession();
+
+if(!session){
+
+location.replace("login.html");
 
 return;
 
 }
 
-try{
-
-await sendPasswordResetEmail(
-
-auth,
-
-email
-
-);
-
-alert(
-
-"Password reset email sent."
-
-);
+return session;
 
 }
-
-catch(error){
-
-alert(
-
-error.message
-
-);
-
-}
-
-};
-
-}
-
-onAuthStateChanged(
-
-auth,
-
-(user)=>{
-
-const page=
-
-location.pathname;
-
-if(
-
-user&&
-
-page.includes(
-
-"login.html"
-
-)
-
-){
-
-location.href=
-
-"dashboard.html";
-
-}
-
-}
-
-);
-
-window.logout=
-
-async()=>{
-
-await signOut(auth);
-
-location.href=
-
-"login.html";
-
-};
