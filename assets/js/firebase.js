@@ -151,6 +151,8 @@ auth,
 
 doc,
 
+collection,
+
 addDoc,
 
 setDoc,
@@ -182,3 +184,62 @@ signOut,
 onAuthStateChanged
 
 };
+/* ==========================================================
+   COLLECTION REFERENCES
+========================================================== */
+
+export const adminsRef = collection(db,"admins");
+
+export const membersRef = collection(db,"members");
+
+export const financialYearsRef = collection(db,"financialYears");
+
+export const programsRef = collection(db,"programs");
+
+export const categoriesRef = collection(db,"categories");
+
+export const creditsRef = collection(db,"credits");
+
+export const debitsRef = collection(db,"debits");
+
+export const contributionsRef = collection(db,"memberContributions");
+
+export const cashRef = collection(db,"clubCash");
+
+export const statementsRef = collection(db,"statements");
+
+export const activityLogsRef = collection(db,"activityLogs");
+
+export const settingsRef = collection(db,"settings");
+
+/* ==========================================================
+   COMMON HELPERS
+========================================================== */
+
+export function now(){
+
+return serverTimestamp();
+
+}
+
+export function today(){
+
+return new Date().toISOString().split("T")[0];
+
+}
+
+export function currentTime(){
+
+return new Date().toLocaleTimeString();
+
+}
+
+/* ==========================================================
+   FIREBASE READY
+========================================================== */
+
+console.log(
+
+"Club Accounts Management System Ready"
+
+);
