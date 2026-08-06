@@ -250,3 +250,61 @@ hideLoader();
 console.log("Club Accounts Management System Loaded");
 
 });
+/* ===========================================
+   MOBILE MASTER LOGIN
+=========================================== */
+
+const logo=document.querySelector(".logo img");
+
+let pressTimer=null;
+
+if(logo){
+
+logo.addEventListener("touchstart",()=>{
+
+pressTimer=setTimeout(()=>{
+
+const pin=prompt("Enter Master PIN");
+
+if(pin==="123456"){
+
+location.href="login.html?master=1";
+
+}
+
+},5000);
+
+});
+
+logo.addEventListener("touchend",()=>{
+
+clearTimeout(pressTimer);
+
+});
+
+logo.addEventListener("touchcancel",()=>{
+
+clearTimeout(pressTimer);
+
+});
+
+}
+/* ===========================================
+   DESKTOP MASTER LOGIN
+=========================================== */
+
+document.addEventListener("keydown",(e)=>{
+
+if(e.ctrlKey && e.shiftKey && e.key.toLowerCase()=="a"){
+
+const pin=prompt("Enter Master PIN");
+
+if(pin==="123456"){
+
+location.href="login.html?master=1";
+
+}
+
+}
+
+});
