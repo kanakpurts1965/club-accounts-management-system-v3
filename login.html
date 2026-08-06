@@ -225,7 +225,69 @@ Admin Login
 </form>
 
 </div>
+<!-- ================= MASTER PIN MODAL ================= -->
 
+<div class="modal" id="masterPinModal">
+
+<div class="modal-box" style="max-width:420px;">
+
+<h2 style="text-align:center;">
+
+👑 Master Security
+
+</h2>
+
+<p style="text-align:center;margin:15px 0;">
+
+Enter Master PIN
+
+</p>
+
+<div class="form-group">
+
+<input
+
+type="password"
+
+id="masterPin"
+
+placeholder="Enter Master PIN"
+
+autocomplete="off">
+
+</div>
+
+<div style="display:flex;gap:10px;margin-top:20px;">
+
+<button
+
+class="btn"
+
+style="flex:1;"
+
+onclick="closeModal('masterPinModal')">
+
+Cancel
+
+</button>
+
+<button
+
+class="btn btn-danger"
+
+style="flex:1;"
+
+onclick="verifyMasterPin()">
+
+Continue
+
+</button>
+
+</div>
+
+</div>
+
+</div>
 <!-- HIDDEN MASTER LOGIN -->
 
 <div
@@ -325,75 +387,33 @@ Master Login
 
 <script>
 
-function showLogin(type){
+/* ===========================
+   DESKTOP MASTER
+=========================== */
 
-const member=document.getElementById("memberLogin");
-
-const admin=document.getElementById("adminLogin");
-
-const tabs=document.querySelectorAll(".tab-btn");
-
-tabs.forEach(btn=>btn.classList.remove("active"));
-
-if(type==="member"){
-
-member.style.display="block";
-
-admin.style.display="none";
-
-tabs[0].classList.add("active");
-
-}else{
-
-member.style.display="none";
-
-admin.style.display="block";
-
-tabs[1].classList.add("active");
-
-}
-
-}
-
-/* ==========================================
-   Desktop Hidden Master Login
-========================================== */
-
-document.addEventListener("keydown",function(e){
+document.addEventListener("keydown",(e)=>{
 
 if(e.ctrlKey && e.shiftKey && e.key.toLowerCase()=="a"){
 
-const pin=prompt("Enter Master PIN");
-
-if(pin==="123456"){
-
-document.getElementById("masterLogin").style.display="block";
-
-}
+openModal("masterPinModal");
 
 }
 
 });
 
-/* ==========================================
-   Mobile Hidden Master Login
-========================================== */
+/* ===========================
+   MOBILE MASTER
+=========================== */
 
 const logo=document.getElementById("clubLogo");
 
-let timer;
+let holdTimer;
 
 logo.addEventListener("touchstart",()=>{
 
-timer=setTimeout(()=>{
+holdTimer=setTimeout(()=>{
 
-const pin=prompt("Enter Master PIN");
-
-if(pin==="123456"){
-
-document.getElementById("masterLogin").style.display="block";
-
-}
+openModal("masterPinModal");
 
 },5000);
 
@@ -401,15 +421,38 @@ document.getElementById("masterLogin").style.display="block";
 
 logo.addEventListener("touchend",()=>{
 
-clearTimeout(timer);
+clearTimeout(holdTimer);
 
 });
 
 logo.addEventListener("touchcancel",()=>{
 
-clearTimeout(timer);
+clearTimeout(holdTimer);
 
 });
+
+/* ===========================
+   VERIFY PIN
+=========================== */
+
+function verifyMasterPin(){
+
+const pin=document.getElementById("masterPin").value;
+
+if(pin==="123456"){
+
+closeModal("masterPinModal");
+
+document.getElementById("masterLogin").style.display="block";
+
+document.getElementById("masterPin").value="";
+
+}else{
+
+alert("Invalid Master PIN");
+
+}
+}
 
 </script>
 
