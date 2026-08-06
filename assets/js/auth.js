@@ -1,84 +1,99 @@
-/* ========================================================== 
+/* ==========================================================
    CLUB ACCOUNTS MANAGEMENT SYSTEM
-   Authentication Engine V3 
+   AUTH ENGINE V4
    Designed & Developed by Tanmoy Adak
 ========================================================== */
 
-import {
+import{
 
-auth, 
+auth,
 db,
 
-signInWithEmailAndPassword,
-signOut,
-onAuthStateChanged,
+adminsRef,
+membersRef,
 
 doc,
 getDoc,
 getDocs,
+
 query,
 where,
 
-adminsRef,
-membersRef
+signInWithEmailAndPassword,
+sendPasswordResetEmail,
+signOut,
+onAuthStateChanged,
+
+updateDoc,
+serverTimestamp
 
 }
 
 from "./firebase.js";
 
-/* ===========================================
-   SESSION
-=========================================== */
+/* ==========================================================
+   SESSION KEY
+========================================================== */
 
-const SESSION_KEY="club_accounts_session";
+const SESSION_NAME="club_accounts_session";
 
-/* ===========================================
+/* ==========================================================
    SAVE SESSION
-=========================================== */
+========================================================== */
 
-function saveSession(data){
+function saveSession(user){
 
 localStorage.setItem(
 
-SESSION_KEY,
+SESSION_NAME,
 
-JSON.stringify(data)
+JSON.stringify(user)
 
 );
 
 }
 
-/* ===========================================
+/* ==========================================================
    GET SESSION
-=========================================== */
+========================================================== */
 
 export function getSession(){
 
-const s=
+const data=
 
-localStorage.getItem(SESSION_KEY);
+localStorage.getItem(
 
-return s?JSON.parse(s):null;
+SESSION_NAME
+
+);
+
+return data?
+
+JSON.parse(data)
+
+:
+
+null;
 
 }
 
-/* ===========================================
-   CLEAR SESSION
-=========================================== */
+/* ==========================================================
+   REMOVE SESSION
+========================================================== */
 
-export function clearSession(){
+export function removeSession(){
 
 localStorage.removeItem(
 
-SESSION_KEY
+SESSION_NAME
 
 );
 
 }
 
-/* ===========================================
+/* ==========================================================
    MEMBER LOGIN
-=========================================== */
+========================================================== */
 
 export async function memberLogin(
 
@@ -104,21 +119,25 @@ if(snap.empty){
 
 throw new Error(
 
-"Member Not Found"
+"Member not found."
 
 );
 
 }
 
+const memberDoc=
+
+snap.docs[0];
+
 const member=
 
-snap.docs[0].data();
+memberDoc.data();
 
-if(member.status!="active"){
+if(member.status!=="active"){
 
 throw new Error(
 
-"Member Account Disabled"
+"Member account disabled."
 
 );
 
@@ -128,17 +147,31 @@ if(member.password!==password){
 
 throw new Error(
 
-"Wrong Password"
+"Invalid password."
 
 );
 
 }
 
+await updateDoc(
+
+memberDoc.ref,
+
+{
+
+lastLogin:
+
+serverTimestamp()
+
+}
+
+);
+
 saveSession({
 
 uid:member.uid,
 
-memberNo:member.memberNo,
+memberId:member.memberId,
 
 name:member.name,
 
@@ -148,7 +181,11 @@ mobile:member.mobile
 
 });
 
-location.href="viewer.html";
+location.replace(
+
+"viewer.html"
+
+);
 
 }
 
@@ -164,11 +201,7 @@ password
 
 ){
 
-const q=query(
-
-adminsRef,
-
-where(
+const field=
 
 id.includes("@")
 
@@ -178,13 +211,13 @@ id.includes("@")
 
 :
 
-"mobile",
+"mobile";
 
-"==",
+const q=query(
 
-id
+adminsRef,
 
-)
+where(field,"==",id)
 
 );
 
@@ -196,21 +229,25 @@ if(snap.empty){
 
 throw new Error(
 
-"Admin Not Found"
+"Admin not found."
 
 );
 
 }
 
+const adminDoc=
+
+snap.docs[0];
+
 const admin=
 
-snap.docs[0].data();
+adminDoc.data();
 
-if(admin.status!="active"){
+if(admin.status!=="active"){
 
 throw new Error(
 
-"Admin Account Disabled"
+"Admin account disabled."
 
 );
 
@@ -220,27 +257,47 @@ if(admin.password!==password){
 
 throw new Error(
 
-"Wrong Password"
+"Invalid password."
 
 );
 
 }
 
+await updateDoc(
+
+adminDoc.ref,
+
+{
+
+lastLogin:
+
+serverTimestamp()
+
+}
+
+);
+
 saveSession({
 
 uid:admin.uid,
+
+adminId:admin.adminId,
 
 name:admin.name,
 
 role:admin.role,
 
-email:admin.email,
+mobile:admin.mobile,
 
-mobile:admin.mobile
+email:admin.email
 
 });
 
-location.href="dashboard.html";
+location.replace(
+
+"dashboard.html"
+
+);
 
 }
 
@@ -288,7 +345,7 @@ if(!snap.exists()){
 
 throw new Error(
 
-"Master Admin Not Found"
+"Master Admin not found."
 
 );
 
@@ -298,15 +355,29 @@ const master=
 
 snap.data();
 
-if(master.status!="active"){
+if(master.status!=="active"){
 
 throw new Error(
 
-"Master Disabled"
+"Master account disabled."
 
 );
 
 }
+
+await updateDoc(
+
+ref,
+
+{
+
+lastLogin:
+
+serverTimestamp()
+
+}
+
+);
 
 saveSession({
 
@@ -316,13 +387,37 @@ name:master.name,
 
 role:"master",
 
-email:master.email,
+mobile:master.mobile,
 
-mobile:master.mobile
+email:master.email
 
 });
 
-location.href="dashboard.html";
+location.replace(
+
+"dashboard.html"
+
+);
+
+/* ==========================================================
+   RESET PASSWORD
+========================================================== */
+
+}
+
+export async function resetPassword(
+
+email
+
+){
+
+await sendPasswordResetEmail(
+
+auth,
+
+email
+
+);
 
 }
 
@@ -332,16 +427,24 @@ location.href="dashboard.html";
 
 export async function logout(){
 
-await signOut(auth);
+await signOut(
 
-clearSession();
+auth
 
-location.replace("login.html");
+);
+
+removeSession();
+
+location.replace(
+
+"login.html"
+
+);
 
 }
 
 /* ==========================================================
-   SESSION CHECK
+   ROUTE PROTECTION
 ========================================================== */
 
 export function requireLogin(){
@@ -352,12 +455,49 @@ getSession();
 
 if(!session){
 
-location.replace("login.html");
+location.replace(
 
-return;
+"login.html"
+
+);
+
+return null;
 
 }
 
 return session;
 
 }
+
+/* ==========================================================
+   AUTH STATE
+========================================================== */
+
+onAuthStateChanged(
+
+auth,
+
+(user)=>{
+
+if(user){
+
+console.log(
+
+"Logged :",
+
+user.email
+
+);
+
+}else{
+
+console.log(
+
+"No Login"
+
+);
+
+}
+
+}
+);
