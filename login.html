@@ -4,94 +4,298 @@
 <head>
 
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Login | Club Accounts Management System</title>
 
-<title>
+<link rel="icon" href="123.png.png">
 
-Login
-
-</title>
-
-<link rel="icon"
-href="logo.png.png">
-
-<link rel="stylesheet"
-href="assets/css/main.css">
-
-<link rel="stylesheet"
-href="assets/css/layout.css">
-
-<link rel="stylesheet"
-href="assets/css/login.css">
+<link rel="stylesheet" href="assets/css/main.css">
+<link rel="stylesheet" href="assets/css/layout.css">
+<link rel="stylesheet" href="assets/css/components.css">
+<link rel="stylesheet" href="assets/css/responsive.css">
+<link rel="stylesheet" href="assets/css/login.css">
 
 </head>
 
 <body>
 
-<div class="login-page">
+<div class="login-container">
 
-<div class="login-box">
+<div class="left-panel">
 
-<img
-src="logo.png.png"
-class="login-logo">
+<img src="123.png.png"
+
+id="clubLogo"
+
+class="club-logo">
 
 <h1>
 
-Club Accounts Management System
+Kanakpur Tarun Sangha
 
 </h1>
 
+<h3>
+
+Club Accounts Management System
+
+</h3>
+
 <p>
 
-Designed & Developed by Tanmoy Adak
+Transparency • Digital Accounting • Smart Management
 
 </p>
 
-<form id="loginForm">
+</div>
+
+<div class="right-panel">
+
+<div class="login-card">
+
+<h2>
+
+Welcome
+
+</h2>
+
+<p>
+
+Select Login Type
+
+</p>
+
+<!-- LOGIN TAB -->
+
+<div class="login-tabs">
+
+<button
+
+class="tab-btn active"
+
+onclick="showLogin('member')">
+
+👤 Member
+
+</button>
+
+<button
+
+class="tab-btn"
+
+onclick="showLogin('admin')">
+
+👨‍💼 Admin
+
+</button>
+
+</div>
+
+<!-- MEMBER LOGIN -->
+
+<div
+
+id="memberLogin"
+
+class="login-form">
+
+<form id="memberLoginForm">
+
+<div class="form-group">
+
+<label>
+
+Mobile Number
+
+</label>
 
 <input
 
-type="email"
+type="text"
 
-id="email"
+id="memberMobile"
 
-placeholder="Email"
+placeholder="Enter Mobile Number"
 
 required>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Password
+
+</label>
 
 <input
 
 type="password"
 
-id="password"
+id="memberPassword"
 
-placeholder="Password"
+placeholder="Enter Password"
 
 required>
 
+</div>
+
 <button
 
-class="primary-btn"
+type="submit"
 
-type="submit">
+class="btn btn-primary"
 
-Login
+style="width:100%;">
+
+Member Login
 
 </button>
 
 </form>
 
-<div class="login-footer">
+</div>
 
-<a
-href="#"
-id="forgotPassword">
+<!-- ADMIN LOGIN -->
 
-Forgot Password?
+<div
 
-</a>
+id="adminLogin"
+
+class="login-form"
+
+style="display:none;">
+
+<form id="adminLoginForm">
+
+<div class="form-group">
+
+<label>
+
+Mobile / Email
+
+</label>
+
+<input
+
+type="text"
+
+id="adminId"
+
+placeholder="Enter Mobile or Email"
+
+required>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Password
+
+</label>
+
+<input
+
+type="password"
+
+id="adminPassword"
+
+placeholder="Enter Password"
+
+required>
+
+</div>
+
+<button
+
+type="submit"
+
+class="btn btn-success"
+
+style="width:100%;">
+
+Admin Login
+
+</button>
+
+</form>
+
+</div>
+
+<!-- HIDDEN MASTER LOGIN -->
+
+<div
+
+id="masterLogin"
+
+style="display:none; margin-top:30px;">
+
+<hr>
+
+<h3>
+
+👑 Master Admin Login
+
+</h3>
+
+<form id="masterLoginForm">
+
+<div class="form-group">
+
+<label>
+
+Email
+
+</label>
+
+<input
+
+type="email"
+
+id="masterEmail"
+
+placeholder="Master Email">
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Password
+
+</label>
+
+<input
+
+type="password"
+
+id="masterPass"
+
+placeholder="Master Password">
+
+</div>
+
+<button
+
+type="submit"
+
+class="btn btn-danger"
+
+style="width:100%;">
+
+Master Login
+
+</button>
+
+</form>
+
+</div>
+
 
 </div>
 
@@ -99,16 +303,123 @@ Forgot Password?
 
 </div>
 
-<script type="module"
-src="assets/js/firebase.js">
+<!-- ================= Loader ================= -->
+
+<div id="loader" style="display:none;">
+
+<div class="loader-box">
+
+<img src="123.png.png" width="80">
+
+<h3>Loading...</h3>
+
+</div>
+
+</div>
+
+<!-- ================= Toast ================= -->
+
+<div id="toastContainer"></div>
+
+<!-- ================= Script ================= -->
+
+<script>
+
+function showLogin(type){
+
+const member=document.getElementById("memberLogin");
+
+const admin=document.getElementById("adminLogin");
+
+const tabs=document.querySelectorAll(".tab-btn");
+
+tabs.forEach(btn=>btn.classList.remove("active"));
+
+if(type==="member"){
+
+member.style.display="block";
+
+admin.style.display="none";
+
+tabs[0].classList.add("active");
+
+}else{
+
+member.style.display="none";
+
+admin.style.display="block";
+
+tabs[1].classList.add("active");
+
+}
+
+}
+
+/* ==========================================
+   Desktop Hidden Master Login
+========================================== */
+
+document.addEventListener("keydown",function(e){
+
+if(e.ctrlKey && e.shiftKey && e.key.toLowerCase()=="a"){
+
+const pin=prompt("Enter Master PIN");
+
+if(pin==="123456"){
+
+document.getElementById("masterLogin").style.display="block";
+
+}
+
+}
+
+});
+
+/* ==========================================
+   Mobile Hidden Master Login
+========================================== */
+
+const logo=document.getElementById("clubLogo");
+
+let timer;
+
+logo.addEventListener("touchstart",()=>{
+
+timer=setTimeout(()=>{
+
+const pin=prompt("Enter Master PIN");
+
+if(pin==="123456"){
+
+document.getElementById("masterLogin").style.display="block";
+
+}
+
+},5000);
+
+});
+
+logo.addEventListener("touchend",()=>{
+
+clearTimeout(timer);
+
+});
+
+logo.addEventListener("touchcancel",()=>{
+
+clearTimeout(timer);
+
+});
 
 </script>
 
-<script type="module"
-src="assets/js/auth.js">
+<script type="module" src="assets/js/firebase.js"></script>
 
-</script>
+<script type="module" src="assets/js/auth.js"></script>
+
+<script src="assets/js/app.js"></script>
 
 </body>
 
 </html>
+  
